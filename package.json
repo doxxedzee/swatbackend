@@ -1,0 +1,20 @@
+{
+  "name": "my-discord-register-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "boto3": "^0.0.1",
+    "discord.js": "^14.16.3",
+    "express": "^4.21.1",
+    "minio": "^8.0.4",
+    "mongoose": "^8.7.2"
+  }
+}
