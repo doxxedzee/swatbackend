@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=icon href=https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/ak47.png type=image/x-icon>
+    <meta name="twitter:image" content="https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/swats.lol.png">
+    <meta property="og:image" id="embed-icon" content="https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/swats.lol.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>swats.lol</title>
+    <meta property="og:title" content="Swats.lol" />
+    <meta property="og:description" content="#1 biggest Com Network Organization." />
+    <meta name="theme-color" content="#000000">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0d0d;
+            color: #fff;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            -webkit-user-select: none; /* Chrome, Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE 10+ */
+    user-select: none;         /* Standard */
+        }
+
+        header {
+            background-color: #0f0f0fbb;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            width: calc(100% - 20px);
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 100px;
+            left: 10px;
+            top: 10px;
+
+            transform: translateY(-80px);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        nav a {
+            display: inline-block;
+            margin: 0 15px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .titleText {
+            transition: transform 0.3s ease;
+        }
+
+        .titleText:hover {
+            transform: scale(1.1);
+        }
+
+        .titleText a {
+            transition: color 0.3s ease;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .titleText a:hover {
+            color: #ffffff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 110px 20px 100px;
+            background: linear-gradient(0deg, #0d0d0d, #000000);
+            color: #fff;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            color: #ccc;
+        }
+
+        .button {
+            background-color: #000000;
+            border: none;
+            padding: 15px 40px;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 20px;
+            font-size: 1em;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            margin-top: 30px;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* input[type="text"] {
+            padding: 15px 20px;
+            border-radius: 20px;
+            border: none;
+            width: 300px;
+            margin-right: 10px;
+        } */
+
+        input[type="text"] {
+            border: none;
+            width: 180px;
+            margin-right: 10px;
+            font-size: 20px;
+            background-color: #00000000;
+
+            outline: none;
+
+            color: #FFFFFF;
+        }
+
+        .mainInput {
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 20px;
+            background-color: #0d0d0d;
+            margin-right: 10px;
+            border: 3px solid #0d0d0d;
+            color: #ffffff;
+
+            transition: border 0.3s ease;
+        }
+
+        .mainInput:hover {
+            border: 3px solid #ffffff;
+        }
+
+        .mainInput:has(input[type="text"]:focus) {
+            border: 3px solid #000000;
+        }
+
+        .features,
+        .plans {
+            text-align: center;
+            padding: 80px 20px;
+
+            opacity: 0;
+
+            transition: transform 0.5s ease, opacity 0.5s ease;
+
+            transform: translateY(-80px) scale(0.8);
+        }
+
+        .scroll-animation {
+            opacity: 1 !important;
+            transform: translateY(0px) scale(1) !important;
+        }
+
+        .titleAnimation {
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateY(-80px) scale(0.8);
+        }
+
+        .card {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px;
+            display: inline-block;
+            width: 300px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            background-color: #0f0f0f;
+            padding: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        .image,
+        .image2 {
+            -webkit-filter: drop-shadow(1px 1px 0 #000000) drop-shadow(-1px -1px 0 #000000) drop-shadow(1px -1px 0 #000000) drop-shadow(-1px 1px 0 #000000);
+            filter: drop-shadow(1px 1px 0 #000000) drop-shadow(-1px -1px 0 #000000) drop-shadow(1px -1px 0 #000000) drop-shadow(-1px 1px 0 #000000);
+
+            width: 45vw;
+        }
+
+        @media (max-width: 1000px) {
+
+            .image,
+            .image2 {
+                width: 90vw;
+            }
+
+            .imageContainer {
+                flex-direction: column;
+            }
+        }
+
+        .imageContainer {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #181818;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::selection {
+            background: #000000;
+            color: #ffffff;
+        }
+    </style>
+    <script>
+        function claimProfile() {
+            const username = document.getElementById('usernameInput').value;
+            if (username) {
+                window.location.href = window.location.origin + `/register?username=${username}`;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h2 class="titleText"><a href="/">swats.lol</a></h2>
+        </div>
+        <nav>
+            <a href="https://discord.com/invite/swats">Discord</a>
+            <a href="#pricing">Pricing</a>
+            <a href="/login">Login
+                <a href="/register">Register</a>
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="titleAnimation">
+            <h1>swats.lol</h1>
+            <p>#1 biggest secured com network organization.<br>Secure against harmful Cyber-attacks.</p>
+            <span class="mainInput">swats.lol/<input type="text" id="usernameInput" placeholder="username"></span>
+            <button class="button" onclick="claimProfile()">Claim Now</button>
+        </div>
+        <div class="imageContainer titleAnimation">
+            <img src="https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/backgrounds/ethtalks/thumb2.png" class="image">
+            <img src="https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/backgrounds/ethtalks/real2.png" class="image2">
+        </div>
+    </section>
+
+    <section id="features" class="features animation">
+        <h2>Why Choose swats.lol?</h2>
+        <div class="card">
+            <h3>Customizable Profiles</h3>
+            <p>Create a profile that truly represents you with endless customization options.</p>
+        </div>
+        <div class="card">
+            <h3>Multiple Domains</h3>
+            <p>Choose from various unique domains to personalize your profile link.</p>
+        </div>
+        <div class="card">
+            <h3>Link All Your Socials</h3>
+            <p>Connect and showcase all your social media platforms in one place.</p>
+        </div>
+    </section>
+
+    <section id="pricing" class="plans animation">
+        <h2>Explore our exclusive plans</h2>
+        <div class="card">
+            <h1>Free</h1>
+            <h1>€0 <span style="font-size: 15px; color: #a8a8a8;">For Lifetime</span></h1>
+            <li>Limited Customization</li>
+            <li>Standard Support</li>
+            <li>Limited Link Sharing</li>
+            <button class="button" style="margin-top: 10px;" onclick="window.location = '/register';">Get started</button>
+        </div>
+        <div class="card">
+            <h1>Premium</h1>
+            <h1>€4.99 <span style="font-size: 15px; color: #a8a8a8;">For Lifetime</span></h1>
+            <li>Exclusive Badge</li>
+            <li>Unlimited Customization</li>
+            <li>Priority Support</li>
+            <button class="button" style="margin-top: 10px;" onclick="window.location = '/pricing';">Get started</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 swats.lol - All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const the_animation = document.querySelectorAll('.animation')
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && !entry.target.classList.contains('scroll-animation')) {
+                    entry.target.classList.add('scroll-animation')
+                }
+            })
+        },
+            {
+                threshold: 0.5
+            });
+
+        for (let i = 0; i < the_animation.length; i++) {
+            const elements = the_animation[i];
+
+            observer.observe(elements);
+        }
+
+        const the_animation2 = document.querySelectorAll('.titleAnimation')
+
+        setTimeout(() => {
+            document.querySelector("header").classList.add('scroll-animation');
+        }, 500);
+
+        setTimeout(() => {
+            the_animation2[0].classList.add('scroll-animation');
+        }, 900);
+        setTimeout(() => {
+            the_animation2[1].classList.add('scroll-animation');
+        }, 1400);
+    </script>
+                <script>
+                    document.addEventListener('contextmenu', function(e) {
+                        e.preventDefault();
+                    });
+                
+                    document.addEventListener('keydown', function(e) {
+                        // F12 key
+                        if (e.key === 'F12' || e.keyCode === 123) {
+                            e.preventDefault();
+                        }
+                        // Ctrl+Shift+I (open developer tools)
+                        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                            e.preventDefault();
+                        }
+                        // Ctrl+Shift+J (open developer tools)
+                        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                            e.preventDefault();
+                        }
+                        // Ctrl+U (view source)
+                        if (e.ctrlKey && e.key === 'U') {
+                            e.preventDefault();
+                        }
+                    });
+                </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select all images on the page
+        const images = document.querySelectorAll('img');
+
+        // Disable dragging on each image
+        images.forEach(function(image) {
+            image.setAttribute('draggable', 'false'); // Disable drag attribute
+
+            // Prevent the default drag event behavior
+            image.addEventListener('dragstart', function(event) {
+                event.preventDefault();
+            });
+        });
+    });
+</script>
+
+<script src="https://cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="4bd4645f4892bfc91ed2554f-|49" defer></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

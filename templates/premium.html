@@ -1,0 +1,499 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium - swats.lol</title>
+    <link rel=icon href=https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/ak47.png type=image/x-icon>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js" type="0932753988a76ad1b5ab9e9a-text/javascript"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #ffffff;
+            --primary-dark: #ffffff;
+            --bg-dark: #0a0a0a;
+        }
+
+        body, html {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar {
+            background: rgb(0, 0, 0);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s ease;
+            z-index: 10000;
+        }
+
+        .sidebar-group {
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-group:hover {
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .sidebar-item:hover {
+            opacity: 1;
+            background: rgb(0, 0, 0);
+        }
+
+        .sidebar-item.active {
+            opacity: 1;
+            background: rgb(0, 0, 0);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgb(255, 255, 255);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgb(255, 255, 255);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+        }
+
+        .switch {
+            display: inline-block;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .switch label {
+            display: block;
+            width: 48px;
+            height: 24px;
+            padding: 2px;
+            border-radius: 12px;
+            border: 2px solid rgb(255, 255, 255);
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgb(0, 0, 0);
+        }
+
+        .switch label::after {
+            content: "";
+            display: inherit;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .switch input:checked ~ label {
+            border-color: var(--primary);
+            background: rgb(0, 0, 0);
+        }
+
+        .switch input:checked ~ label::after {
+            transform: translateX(24px);
+            background: var(--primary);
+        }
+
+        .custom-select {
+            background: rgb(2, 0, 0);
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .custom-select:hover {
+            border-color: rgb(255, 255, 255);
+            background: rgb(0, 0, 0);
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgb(255, 255, 255);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 6px;
+            background: rgb(0, 0, 0);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 6px rgb(255, 255, 255);
+        }
+
+        .pickr {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid rgb(255, 255, 255);
+        }
+
+        .pickr button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgb(255, 255, 255);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+        }
+        .popup {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0);
+        }
+
+        .popup-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .popup-content {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .popup-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .popup-button:hover {
+            background-color: #ffffff;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                height: 100vh;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="flex">
+    <button class="mobile-menu-button fixed top-4 left-4 p-2 bg-gray-800 rounded-lg z-50 lg:hidden">
+        <i class="fas fa-bars text-white text-xl"></i>
+    </button>
+
+    <div class="sidebar w-64 h-screen fixed lg:relative">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center space-x-3 mb-6 p-2.5 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-300 shadow-lg hover:scale-105">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-md -z-10"></div>
+                </div>
+                <h1 class="text-2xl font-bold text-white bg-clip-text bg-gradient-to-r from-black to-white animate-pulse">
+                    swats.lol
+                </h1>
+            </div>
+
+            <div class="flex-1 space-y-4 overflow-y-auto">
+                <div class="sidebar-group">
+                    <div class="text-xs text-gray-500 uppercase ml-3 mb-2">Dashboard</div>
+                    <a href="/dashboard" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-home w-6"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    {% if username %}
+                    <!-- If logged in, link to their profile -->
+                    <a href="/{{ username }}" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-user w-6"></i>
+                        <span>Profile</span>
+                    </a>
+                {% else %}
+                    <!-- If not logged in, redirect to the login page -->
+                    <a href="/login" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-user w-6"></i>
+                        <span>Profile</span>
+                    </a>
+                {% endif %}
+                    <a href="/customize" class="sidebar-item active flex items-center p-3 rounded-lg">
+                        <i class="fas fa-paint-brush w-6"></i>
+                        <span>Bio Editor</span>
+                    </a>
+                    <a href="/premium" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-gem w-6"></i>
+                        <span>Premium</span>
+                    </a>
+                    <a href="/links" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-link w-6"></i>
+                        <span>Social Links</span>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="pt-4 border-t border-gray-800">
+                <form action="/logout" method="get">
+                    <button type="submit" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-cog w-6"></i>
+                        <span>Log out</span>
+                    </button>
+                </form>
+            </div>            
+            
+                <a href="https://discord.gg/swats" target="_blank" 
+                class="sidebar-item flex items-center p-3 rounded-lg mt-2 bg-white bg-opacity-20 hover:bg-opacity-30">
+                    <i class="fab fa-discord w-6"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 p-8">
+        <h2 class="text-3xl font-bold mb-8 text-white">
+            Premium Customization
+        </h2>        
+
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-6 flex items-center">
+                    <i class="fas fa-upload mr-3 text-white"></i>
+                    Premium Effects
+                </h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-sm text-gray-400">Cursor Effect</label>
+                            <select id="cursorEffects" class="custom-select w-full">
+                                <option value="none">None</option>
+                                <option value="sparkles">Sparkles</option>
+                                <option value="trail">Trail</option>
+                                <option value="following-dot">Following Dot</option>
+                                <option value="following-dot">Oneko</option>
+                            </select>
+                        </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm text-gray-400">Background Effect</label>
+                    <select id="cursorEffects" class="custom-select w-full">
+                        <option value="none">None</option>
+                        <option value="sparkles">Rain</option>
+                        <option value="trail">Thunder</option>
+                        <option value="following-dot">Stars</option>
+                    </select>
+                </div>
+        </div>
+            </div>
+    <script type="0932753988a76ad1b5ab9e9a-text/javascript">
+        const colorPickers = ['visualizercolor', 'bordercolor', 'cursorEffectsColor', 'gradient1Color', 'gradient2Color'];
+        const pickrInstances = {};
+    
+        colorPickers.forEach(id => {
+            pickrInstances[id] = Pickr.create({
+                el: `#${id}`,
+                theme: 'nano',
+                default: '#000000',
+                components: {
+                    preview: true,
+                    opacity: true,
+                    hue: true,
+                    interaction: {
+                        hex: true,
+                        rgba: true,
+                        input: true,
+                        save: true
+                    }
+                }
+            });
+        });
+    
+        function populateFormFields(data) {
+            const elements = {
+                'typewriter': 'checked',
+                'visualizer': 'checked',
+                'visualizerintensity': 'value',
+                'usernamegradient': 'checked',
+                'descriptiongradient': 'checked',
+                'hidejoinedat': 'checked',
+                'hideViews': 'checked',
+                'cardborder': 'checked',
+                'cardtilt': 'checked',
+                'descriptionEffects': 'value',
+                'cursorEffects': 'value',
+                'joinedateffects': 'value',
+                'discordrpceffects': 'value',
+                'avatareffects': 'value',
+                'avatarborder': 'checked',
+                'rainbowtab': 'checked',
+                'discordrpcgradient': 'checked',
+                'joinedatgradient': 'checked',
+                'avatargradient': 'checked',
+                'usernameEffects': 'value',
+                'oneko': 'checked'
+            };
+    
+            Object.entries(elements).forEach(([id, prop]) => {
+                try {
+                    const element = document.getElementById(id);
+                    if (element) element[prop] = data[id];
+                } catch (e) {}
+            });
+    
+            Object.entries(pickrInstances).forEach(([id, pickr]) => {
+                try {
+                    if (data[id]) pickr.setColor(data[id]);
+                } catch (e) {}
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/userbio')
+                .then(response => response.json())
+                .then(data => populateFormFields(data))
+                .catch(error => console.error('Error:', error));
+                
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const sidebar = document.querySelector('.sidebar');
+            
+            menuButton?.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+    
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768 && sidebar && !sidebar.contains(e.target) && !menuButton.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+    
+        document.getElementById('submitButton').addEventListener('click', function() {
+            const formData = {};
+            
+            ['typewriter', 'visualizer', 'usernamegradient', 'descriptiongradient', 
+             'hidejoinedat', 'hideViews', 'cardborder', 'cardtilt', 'avatarborder', 
+             'rainbowtab', 'discordrpcgradient', 'joinedatgradient', 'avatargradient', 
+             'oneko'].forEach(id => {
+                formData[id] = document.getElementById(id).checked;
+            });
+    
+            ['visualizerintensity', 'usernameEffects', 'descriptionEffects', 
+             'cursorEffects', 'joinedateffects', 'discordrpceffects', 
+             'avatareffects'].forEach(id => {
+                formData[id] = document.getElementById(id).value;
+            });
+    
+            colorPickers.forEach(id => {
+                formData[id] = pickrInstances[id].getColor().toHEXA().toString();
+            });
+    
+            fetch('/api/puserbio', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(() => {
+                const btn = document.getElementById('submitButton');
+                btn.textContent = 'Saved!';
+                btn.style.background = '#10B981';
+                setTimeout(() => {
+                    btn.textContent = 'Save Changes';
+                    btn.style.background = '';
+                }, 2000);
+            })
+            .catch(() => {
+                const btn = document.getElementById('submitButton');
+                btn.textContent = 'Error!';
+                btn.style.background = '#EF4444';
+                setTimeout(() => {
+                    btn.textContent = 'Save Changes';
+                    btn.style.background = '';
+                }, 2000);
+            });
+        });
+    </script>
+<script src="https://cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="0932753988a76ad1b5ab9e9a-|49" defer></script></body>
+</html>

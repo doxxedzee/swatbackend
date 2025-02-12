@@ -1,0 +1,713 @@
+<!DOCTYPE html><html><head></head>
+    <!DOCTYPE html><html><head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta content="#000000" name="theme-color">
+        <meta content="@{{ username }} | swats.lol" property="og:title">
+        <meta property="og:description" content="#1 Private Network Organization.">
+        <meta content="{{ profile_picture }}" property="og:image">
+        <title>@{{ username }}</title>
+        <link rel="stylesheet" href="/static/css/userPage.css">
+        <link href="https://api.fontshare.com/v2/css?f[]=satoshi@1&amp;f[]=array@400&amp;display=swap" rel="stylesheet">
+        <link rel="icon" href="https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/ak47.png" type="image/x-icon">
+        <meta property="og:url" content="index.html">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Bungee&amp;family=Creepster&amp;family=Gloria+Hallelujah&amp;family=Permanent+Marker&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Bungee&amp;family=Creepster&amp;family=Gloria+Hallelujah&amp;family=Permanent+Marker&amp;display=swap" rel="stylesheet">
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+        <style>.enter-container{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.9);z-index:10;cursor:pointer;color:#fff;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:25px;font-weight:700;text-shadow:0 0 15px rgba(255,255,255,.8);transition:opacity .5s ease-in-out,visibility .5s}.snowflake{position:fixed;top:0;font-size:24px;user-select:none;pointer-events:none;color:#fff}.fixed-tips{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;font-family:Satoshi,sans-serif;font-size:14px;color:#fff}.fixed-tips .tooltip{background-color:rgba(0,0,0,.7);padding:5px 10px;border-radius:5px}.enter-container.fade-out{opacity:0;visibility:hidden}.fade-in{opacity:0;animation:fadeInEffect 1s forwards}.cursor-custom{cursor:url(h.cur) 16 16,auto!important}@keyframes fadeInEffect{to{opacity:1}}</style>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+          }
+      
+          body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('{{ background_url }}'); /* Path to your local image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1; /* Make sure the background stays behind the content */
+          }
+          body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .gif-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensures content appears above the GIF */
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000; /* Changed from rgba(0, 0, 0, 0.9) to solid black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001; /* Higher than enter-container */
+            opacity: 1;
+            transition: opacity 1s ease-out;
+            pointer-events: auto; /* Blocks clicks while loading */
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .error {
+            text-align: center;
+            color: white;
+        }
+
+        .turnstile-container {
+            margin-top: 0px;
+            background: #ffffff; /* Changed to match the loading screen */
+            padding: 0px;
+            border-radius: 0px;
+            display: flex;
+            justify-content: center;
+        }
+        .enter-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, .9);
+            z-index: 10000; /* Lower than loading screen */
+            cursor: pointer;
+            color: #fff;
+            text-align: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 255, 255, .8);
+            transition: opacity .5s ease-in-out, visibility .5s;
+            pointer-events: none; /* Initially disabled */
+        }
+
+        .enter-container.clickable {
+            pointer-events: auto; /* Enable clicks after loading */
+        }
+        .main-content {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+            visibility: hidden;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .enter-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, .9);
+            z-index: 10000;
+            cursor: pointer;
+            color: #fff;
+            text-align: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 255, 255, .8);
+            transition: opacity .5s ease-in-out, visibility .5s;
+            pointer-events: none;
+        }
+
+        .enter-container.clickable {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, .7); /* Slightly more transparent to see background */
+        }
+
+        /* Update loading screen z-index to be highest */
+        .loading-screen {
+            z-index: 10001;
+        }
+        </style>
+        <style>
+.volume-control-wrapper {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.volume-control-wrapper.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.w1teub_8629220724424aabca4a {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    height: 42px;
+    width: 42px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.w1teub_8629220724424aabca4a:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.w1teub_8629220724424aabca4a svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+</style>
+<style>
+.view-counter {
+    position: absolute;
+    /* These variables control positioning */
+    --left-offset: 10px;  /* Adjust this value to move left/right */
+    --down-offset: 0px;   /* Adjust this value to move up/down */
+    left: var(--left-offset);
+    bottom: var(--down-offset);
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    z-index: 10;
+}
+
+.view-counter:hover {
+    opacity: 1;
+}
+
+.view-counter svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.view-counter .tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    margin-bottom: 5px;
+}
+
+.view-counter:hover .tooltip {
+    opacity: 1;
+}
+</style>
+      </head>
+        <body profile="" style="font-family:Satoshi,sans-serif;cursor:url('h.cur'),auto;background-color:#000000">
+        {% if audio_url %}
+<audio id="background-audio" loop>
+    <source src="{{ audio_url }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+{% endif %}
+        <div class="loading-screen">
+            <div class="error">
+                <h1>🛡️</h1>
+                <h2>Securing connection...</h2>
+                <div class="turnstile-container">
+                    <div class="cf-turnstile" 
+                         data-sitekey="0x4AAAAAAA8A9yWRpaInXNTq"
+                         data-callback="onVerifySuccess"
+                         data-theme="dark">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="enter-container" onclick="enterSite()">
+            <div class="enter-text">Click to Enter</div>
+        </div>
+        <div class="volume-control-wrapper">
+    <div class="w1teub_8629220724424aabca4a">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20.1em" height="20.1em" viewBox="0 0 20 20">
+                <path fill="#fff" fill-rule="evenodd" d="M9.383 3.076A1 1 0 0 1 10 4v12a1 1 0 0 1-1.707.707L4.586 13H2a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h2.586l3.707-3.707a1 1 0 0 1 1.09-.217m5.274-.147a1 1 0 0 1 1.414 0A9.97 9.97 0 0 1 19 10a9.97 9.97 0 0 1-2.929 7.071a1 1 0 0 1-1.414-1.414A7.97 7.97 0 0 0 17 10a7.97 7.97 0 0 0-2.343-5.657a1 1 0 0 1 0-1.414m-2.829 2.828a1 1 0 0 1 1.415 0A5.98 5.98 0 0 1 15 10a5.98 5.98 0 0 1-1.757 4.243a1 1 0 0 1-1.415-1.415A3.98 3.98 0 0 0 13 10a3.98 3.98 0 0 0-1.172-2.828a1 1 0 0 1 0-1.415" clip-rule="evenodd" stroke-width="1" stroke="#ffffff"/>
+            </svg>
+        </span>
+    </div>
+</div>
+        <div class="main-content">
+        <video class="video-background" autoplay loop muted>
+            <source src="{{ background_url }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+                  
+        <div class="container">
+        <div class="fixed-tips">
+        </div>
+        {% if profile_picture %}
+    <img class="avatar" src="{{ profile_picture }}" alt="Discord Avatar">
+    {% endif %}
+        <div class="profileLayout">
+            <h1 class="profileUsername" style="color:#fff;text-shadow:0 0 20px #fff;position:relative;display:inline-block;background-image:url('https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/swats/sparkle_white.gif');background-size:100% auto;background-repeat:no-repeat;background-position:center;">
+                {{ username }}
+                <span id="uid-tooltip">UID: {{ uid }}</span>
+            </h1>
+            {% if not hide_badges %}
+            <div class="profileBadges">
+                <div style="display:flex" class="profileBadge earlysupporter">
+                <svg class="profileBadge" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" height="1.3em" viewBox="0 0 24 24" width="1.3em">
+                <path d="m12 8.5l2.116 5.088l5.492.44l-4.184 3.585l1.278 5.36L12 20.1l-4.702 2.872l1.278-5.36l-4.184-3.584l5.492-.44L12 8.5ZM8 2v9H6V2h2Zm10 0v9h-2V2h2Zm-5 0v5h-2V2h2Z" style="filter:drop-shadow(0 0 1.5px #ffffff)!important" fill="#ffffff"></path>
+                </svg>
+                </div>
+                  <div style="display:flex" class="profileBadge member">
+                    <svg class="profileBadge" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12 12q-1.65 0-2.825-1.175T8 8t1.175-2.825T12 4t2.825 1.175T16 8t-1.175 2.825T12 12m-8 8v-2.8q0-.85.438-1.562T5.6 14.55q1.55-.775 3.15-1.162T12 13t3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20z" style="filter:drop-shadow(0 0 1.5px #ffffff)!important" fill="#ffffff"></path>
+                    </svg>
+                    </div>
+                    {% if user_badges and 'imagehost' in user_badges %}
+            <div style="display:flex" class="profileBadge imagehost">
+                <svg class="profileBadge" xmlns:xlink="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
+                    <path fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m8.587 8.236l2.598-5.232a.911.911 0 0 1 1.63 0l2.598 5.232l5.808.844a.902.902 0 0 1 .503 1.542l-4.202 4.07l.992 5.75c.127.738-.653 1.3-1.32.952L12 18.678l-5.195 2.716c-.666.349-1.446-.214-1.319-.953l.992-5.75l-4.202-4.07a.902.902 0 0 1 .503-1.54z" style="filter:drop-shadow(0 0 1.5px #ffffff)!important" fill="#ffffff"></path>
+                </svg>
+            </div>
+            {% endif %}
+
+            {% if user_badges and 'verified' in user_badges %}
+            <div style="display:flex" class="profileBadge verified">
+                <svg class="profileBadge" xmlns:xlink="http://www.w3.org/2000/svg" height="1.3em" viewBox="0 0 24 24" width="1.3em">
+                    <path fill="white" d="m23 12l-2.44-2.79l.34-3.69l-3.61-.82l-1.89-3.2L12 2.96L8.6 1.5L6.71 4.69L3.1 5.5l.34 3.7L1 12l2.44 2.79l-.34 3.7l3.61.82L8.6 22.5l3.4-1.47l3.4 1.46l1.89-3.19l3.61-.82l-.34-3.69zM9.38 16.01L7 13.61a.996.996 0 0 1 0-1.41l.07-.07c.39-.39 1.03-.39 1.42 0l1.61 1.62l5.15-5.16c.39-.39 1.03-.39 1.42 0l.07.07c.39.39.39 1.02 0 1.41l-5.92 5.94c-.41.39-1.04.39-1.44 0" style="filter:drop-shadow(0 0 1.5px #ffffff)!important" fill="#ffffff"></path>
+            </div>
+            {% endif %}
+
+            {% if user_badges and 'staff' in user_badges %}
+            <div style="display:flex" class="profileBadge staff">
+                <svg class="profileBadge" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" height="1.3em" viewBox="0 0 24 24" width="1.3em">
+                    <path d="m16.06 13.09l5.63 5.59l-3.32 3.28l-5.59-5.59v-.92l2.36-2.36h.92m.91-2.53L16 9.6l-4.79 4.8v1.97L5.58 22L2.3 18.68l5.59-5.59h1.97l.78-.78L6.8 8.46H5.5L2.69 5.62L5.31 3l2.8 2.8v1.31L12 10.95l2.66-2.66l-.96-1.01L15 5.97h-2.66l-.65-.65L15 2l.66.66v2.66L16.97 4l3.28 3.28c1.09 1.1 1.09 2.89 0 3.98l-1.97-2.01l-1.31 1.31Z" style="filter:drop-shadow(0 0 1.5px #ffffff)!important" fill="#ffffff"></path>
+                </svg>
+            </div>
+            {% endif %}
+
+            {% if user_badges and 'founder' in user_badges %}
+            <div style="display:flex" class="profileBadge founder">
+                <svg class="profileBadge" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" height="1.3em" viewBox="0 0 24 24" width="1.3em">
+                <path d="M21.609 13.5616L21.8382 11.1263C22.0182 9.2137 22.1082 8.25739 21.781 7.86207C21.604 7.64823 21.3633 7.5172 21.106 7.4946C20.6303 7.45282 20.0329 8.1329 18.8381 9.49307C18.2202 10.1965 17.9113 10.5482 17.5666 10.6027C17.3757 10.6328 17.1811 10.6018 17.0047 10.5131C16.6865 10.3529 16.4743 9.91812 16.0499 9.04851L13.8131 4.46485C13.0112 2.82162 12.6102 2 12 2C11.3898 2 10.9888 2.82162 10.1869 4.46486L7.95007 9.04852C7.5257 9.91812 7.31351 10.3529 6.99526 10.5131C6.81892 10.6018 6.62434 10.6328 6.43337 10.6027C6.08872 10.5482 5.77977 10.1965 5.16187 9.49307C3.96708 8.1329 3.36968 7.45282 2.89399 7.4946C2.63666 7.5172 2.39598 7.64823 2.21899 7.86207C1.8918 8.25739 1.9818 9.2137 2.16181 11.1263L2.391 13.5616C2.76865 17.5742 2.95748 19.5805 4.14009 20.7902C5.32271 22 7.09517 22 10.6401 22H13.3599C16.9048 22 18.6773 22 19.8599 20.7902C21.0425 19.5805 21.2313 17.5742 21.609 13.5616Z" style="filter:drop-shadow(0 0 1.5px #ffffff)!important" fill="#ffffff"></path>
+                </svg>
+    </div>
+    {% endif %}
+
+        </div>
+            {% endif %}
+                </div>
+<!-- Add this inside your container div, before the closing tag -->
+<div class="view-counter">
+    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24">
+        <path fill="#fff" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" stroke-width="1" stroke="#ffffff"/>
+    </svg>
+    <span>{{ view_count }}</span>
+    <div class="tooltip">Profile Views</div>
+</div>
+{% if description and description.strip() %}
+<div class="profileBio">
+    <h2 id="typingText" style="color:#fff"></h2>
+    <div id="typingTexts" style="display:none">
+        {{ description }}
+    </div>
+</div>
+
+<style>
+  @keyframes blinkCursor {
+    50% { border-right-color: transparent; }
+  }
+
+  #typingText {
+    border-right: 2px solid rgba(255, 255, 255, 0.75);
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 15px;
+    min-height: 20px;
+    margin-top: 2px;
+    animation: blinkCursor 0.75s step-end infinite;
+  }
+
+  #typingTexts {
+    font-size: 14px;
+  }
+</style>
+
+<script>
+  const typingTextElement = document.getElementById('typingText');
+  const text = document.getElementById('typingTexts').innerText.trim();
+  let charIndex = 0;
+  const typingSpeed = 100;
+  const eraseSpeed = 50;
+  const pauseBeforeReverse = 2000;
+  let isTyping = true;
+
+  function typeText() {
+    if (isTyping) {
+      if (charIndex < text.length) {
+        typingTextElement.innerHTML += text.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeText, typingSpeed);
+      } else {
+        setTimeout(() => {
+          isTyping = false;
+          eraseText();
+        }, pauseBeforeReverse);
+      }
+    }
+  }
+
+  function eraseText() {
+    if (!isTyping) {
+      if (charIndex > 0) {
+        typingTextElement.innerHTML = text.substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(eraseText, eraseSpeed);
+      } else {
+        setTimeout(() => {
+          isTyping = true;
+          typeText();
+        }, pauseBeforeReverse);
+      }
+    }
+  }
+
+  document.addEventListener("click", function startTyping() {
+    if (typingTextElement.innerHTML === '') {
+      typeText();
+    }
+    document.removeEventListener("click", startTyping);
+  });
+</script>
+{% endif %}
+
+{% if user_data and user_data.discord_presence %}
+<div class="presenceWrapper">
+    <!-- Add the view counter here -->
+    <div class="view-counter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24">
+            <path fill="#fff" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/>
+        </svg>
+        <span>{{ view_count }}</span>
+        <div class="tooltip">Page Views</div>
+    </div>
+    
+    <!-- Existing Discord RPC container -->
+    <div class="presenceContainer">
+        <div class="discordInfos">
+            <div class="discordAvatar">
+                <img class="avatarImage" src="{{ profile_picture }}" alt="Discord Avatar">
+            </div>
+            <div class="discordActivity">
+                <div class="discordUser">
+                    <div class="discordUserDiv">
+                        <span>@{{ username }}</span>
+                    </div>
+                </div>
+                <div class="discordActivityImage"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div style="display:none" id="curEffClr">#ffffff</div>
+<audio id="enter-sound" src="" loop></audio>
+<div class="linkedAccounts">
+    {% if user_data and user_data.socials %}
+        {% for platform, url in user_data.socials.items() %}
+            <a data-type="{{ platform }}" class="linkedAccountsRedirect" target="_blank" href="{{ url }}" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                {% if platform == 'Discord' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.4em" height="3.4em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                {% elif platform == 'Twitter' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231zm-1.161 17.52h1.833L7.045 4.126H5.078z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"/>
+                    </svg>
+                {% elif platform == 'Instagram' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6m0-2a5 5 0 1 1 0 10a5 5 0 0 1 0-10m6.5-.25a1.25 1.25 0 0 1-2.5 0a1.25 1.25 0 0 1 2.5 0M12 4c-2.474 0-2.878.007-4.029.058c-.784.037-1.31.142-1.798.332a2.886 2.886 0 0 0-1.08.703a2.89 2.89 0 0 0-.704 1.08c-.19.49-.295 1.015-.331 1.798C4.006 9.075 4 9.461 4 12c0 2.474.007 2.878.058 4.029c.037.783.142 1.31.331 1.797c.17.435.37.748.702 1.08c.337.336.65.537 1.08.703c.494.191 1.02.297 1.8.333C9.075 19.994 9.461 20 12 20c2.474 0 2.878-.007 4.029-.058c.782-.037 1.309-.142 1.797-.331a2.92 2.92 0 0 0 1.08-.702c.337-.337.538-.65.704-1.08c.19-.493.296-1.02.332-1.8c.052-1.104.058-1.49.058-4.029c0-2.474-.007-2.878-.058-4.029c-.037-.782-.142-1.31-.332-1.798a2.911 2.911 0 0 0-.703-1.08a2.884 2.884 0 0 0-1.08-.704c-.49-.19-1.016-.295-1.798-.331C14.925 4.006 14.539 4 12 4m0-2c2.717 0 3.056.01 4.122.06c1.065.05 1.79.217 2.428.465c.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428c.047 1.066.06 1.405.06 4.122c0 2.717-.01 3.056-.06 4.122c-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772a4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465c-1.066.047-1.405.06-4.122.06c-2.717 0-3.056-.01-4.122-.06c-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153a4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122c.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"/>
+                    </svg>
+                {% elif platform == 'Telegram' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                    <path fill="currentColor" d="m21.936 5.17l-3.03 14.185c-.226.999-.806 1.224-1.644.773l-4.545-3.352l-2.225 2.127c-.225.226-.451.452-.967.452l.355-4.675l8.478-7.704c.354-.355-.097-.484-.548-.193l-10.541 6.64l-4.546-1.386c-.999-.322-.999-1 .226-1.45L20.614 3.72c.87-.258 1.612.194 1.322 1.45"></path>
+                  </svg>
+                {% elif platform == 'TikTok' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6c0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64c0 3.33 2.76 5.7 5.69 5.7c3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48"></path>
+                    </svg>
+                {% elif platform == 'Bitcoin' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105C1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.974.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314c.015.02-.96-.24-.96-.24l-.66 1.51l1.71.426l.93.242l-.54 2.19l1.32.327l.54-2.17c.36.1.705.19 1.05.273l-.51 2.154l1.32.33l.544-2.19c2.24.427 3.93.257 4.64-1.774c.57-1.637-.03-2.58-1.217-3.196c.854-.193 1.504-1.062 1.674-2.254v.013zm-3.01 4.9c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.225 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                {% elif platform == 'Ethereum' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M12 1.75L5.75 12.25L12 16L18.25 12.25L12 1.75M5.75 13.5L12 22.25L18.25 13.5L12 17.25L5.75 13.5Z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Litecoin' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0m-.262 3.678h2.584a.343.343 0 0 1 .33.435l-2.03 6.918l1.905-.582l-.408 1.385l-1.924.56l-1.248 4.214h6.676a.343.343 0 0 1 .328.437l-.582 2a.46.46 0 0 1-.44.33H6.733l1.723-5.822l-1.906.58l.42-1.361l1.91-.58l2.422-8.18a.456.456 0 0 1 .437-.334" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                {% elif platform == 'Solana' %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 16 16" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                    <path fill="#ffffff" fillRule="evenodd" d="M2.45 6.76h9.59c.12 0 .23.05.32.14l1.52 1.56c.28.29.08.78-.32.78H3.97c-.12 0-.23-.05-.32-.14L2.13 7.54c-.28-.29-.08-.78.32-.78m-.32-2.07l1.52-1.56c.08-.09.2-.14.32-.14h9.58c.4 0 .6.49.32.78l-1.51 1.56c-.08.09-.2.14-.32.14H2.45c-.4 0-.6-.49-.32-.78m11.74 6.61l-1.52 1.56c-.09.09-.2.14-.32.14H2.45c-.4 0-.6-.49-.32-.78l1.52-1.56c.08-.09.2-.14.32-.14h9.58c.4 0 .6.49.32.78" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                </svg>
+                    {% elif platform == 'LinkedIn' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#fff" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Spotify' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M17.9 10.9C14.7 9 9.35 8.8 6.3 9.75c-.5.15-1-.15-1.15-.6c-.15-.5.15-1 .6-1.15c3.55-1.05 9.4-.85 13.1 1.35c.45.25.6.85.35 1.3c-.25.35-.85.5-1.3.25m-.1 2.8c-.25.35-.7.5-1.05.25c-2.7-1.65-6.8-2.15-9.95-1.15c-.4.1-.85-.1-.95-.5s.1-.85.5-.95c3.65-1.1 8.15-.55 11.25 1.35c.3.15.45.65.2 1m-1.2 2.75c-.2.3-.55.4-.85.2c-2.35-1.45-5.3-1.75-8.8-.95c-.35.1-.65-.15-.75-.45c-.1-.35.15-.65.45-.75c3.8-.85 7.1-.5 9.7 1.1c.35.15.4.55.25.85M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Twitch' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M11.64 5.93h1.43v4.28h-1.43m3.93-4.28H17v4.28h-1.43M7 2L3.43 5.57v12.86h4.28V22l3.58-3.57h2.85L20.57 12V2m-1.43 9.29l-2.85 2.85h-2.86l-2.5 2.5v-2.5H7.71V3.43h11.43Z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Reddit' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M10.75 13.04c0-.57-.47-1.04-1.04-1.04s-1.04.47-1.04 1.04a1.04 1.04 0 1 0 2.08 0m3.34 2.37c-.45.45-1.41.61-2.09.61s-1.64-.16-2.09-.61a.26.26 0 0 0-.38 0a.26.26 0 0 0 0 .38c.71.71 2.07.77 2.47.77s1.76-.06 2.47-.77a.26.26 0 0 0 0-.38c-.1-.1-.27-.1-.38 0m.2-3.41c-.57 0-1.04.47-1.04 1.04s.47 1.04 1.04 1.04s1.04-.47 1.04-1.04S14.87 12 14.29 12"></path><path fill="#ffffff" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m5.8 11.33c.02.14.03.29.03.44c0 2.24-2.61 4.06-5.83 4.06s-5.83-1.82-5.83-4.06c0-.15.01-.3.03-.44c-.51-.23-.86-.74-.86-1.33a1.455 1.455 0 0 1 2.47-1.05c1.01-.73 2.41-1.19 3.96-1.24l.74-3.49c.01-.07.05-.13.11-.16c.06-.04.13-.05.2-.04l2.42.52a1.04 1.04 0 1 1 .93 1.5c-.56 0-1.01-.44-1.04-.99l-2.17-.46l-.66 3.12c1.53.05 2.9.52 3.9 1.24a1.455 1.455 0 1 1 1.6 2.38" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'GitHub' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M12.001 2c-5.525 0-10 4.475-10 10a9.99 9.99 0 0 0 6.837 9.488c.5.087.688-.213.688-.476c0-.237-.013-1.024-.013-1.862c-2.512.463-3.162-.612-3.362-1.175c-.113-.288-.6-1.175-1.025-1.413c-.35-.187-.85-.65-.013-.662c.788-.013 1.35.725 1.538 1.025c.9 1.512 2.337 1.087 2.912.825c.088-.65.35-1.087.638-1.337c-2.225-.25-4.55-1.113-4.55-4.938c0-1.088.387-1.987 1.025-2.687c-.1-.25-.45-1.275.1-2.65c0 0 .837-.263 2.75 1.024a9.3 9.3 0 0 1 2.5-.337c.85 0 1.7.112 2.5.337c1.913-1.3 2.75-1.024 2.75-1.024c.55 1.375.2 2.4.1 2.65c.637.7 1.025 1.587 1.025 2.687c0 3.838-2.337 4.688-4.562 4.938c.362.312.675.912.675 1.85c0 1.337-.013 2.412-.013 2.75c0 .262.188.574.688.474A10.02 10.02 0 0 0 22 12c0-5.525-4.475-10-10-10" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Steam' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10c-4.6 0-8.45-3.08-9.64-7.27l3.83 1.58a2.84 2.84 0 0 0 2.78 2.27c1.56 0 2.83-1.27 2.83-2.83v-.13l3.4-2.43h.08c2.08 0 3.77-1.69 3.77-3.77s-1.69-3.77-3.77-3.77s-3.78 1.69-3.78 3.77v.05l-2.37 3.46l-.16-.01c-.59 0-1.14.18-1.59.49L2 11.2C2.43 6.05 6.73 2 12 2M8.28 17.17c.8.33 1.72-.04 2.05-.84s-.05-1.71-.83-2.04l-1.28-.53c.49-.18 1.04-.19 1.56.03c.53.21.94.62 1.15 1.15c.22.52.22 1.1 0 1.62c-.43 1.08-1.7 1.6-2.78 1.15c-.5-.21-.88-.59-1.09-1.04zm9.52-7.75c0 1.39-1.13 2.52-2.52 2.52a2.52 2.52 0 0 1-2.51-2.52a2.5 2.5 0 0 1 2.51-2.51a2.52 2.52 0 0 1 2.52 2.51m-4.4 0c0 1.04.84 1.89 1.89 1.89c1.04 0 1.88-.85 1.88-1.89s-.84-1.89-1.88-1.89c-1.05 0-1.89.85-1.89 1.89" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Facebook' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Roblox' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M18.926 23.998L0 18.892L5.075.002L24 5.108ZM15.348 10.09l-5.282-1.453l-1.414 5.273l5.282 1.453z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'OnlyFans' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M24 4.003h-4.015c-3.45 0-5.3.197-6.748 1.957a7.996 7.996 0 1 0 2.103 9.211c3.182-.231 5.39-2.134 6.085-5.173c0 0-2.399.585-4.43 0c4.018-.777 6.333-3.037 7.005-5.995M5.61 11.999A2.391 2.391 0 0 1 9.28 9.97a2.966 2.966 0 0 1 2.998-2.528h.008c-.92 1.778-1.407 3.352-1.998 5.263A2.392 2.392 0 0 1 5.61 12Zm2.386-7.996a7.996 7.996 0 1 0 7.996 7.996a7.996 7.996 0 0 0-7.996-7.996m0 10.394A2.399 2.399 0 1 1 10.395 12a2.396 2.396 0 0 1-2.399 2.398Z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'PayPal' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M9.93 12.99c.1 0 2.42.1 3.8-.24h.01c1.59-.39 3.8-1.51 4.37-5.17c0 0 1.27-4.58-5.03-4.58H7.67c-.49 0-.91.36-.99.84L4.38 18.4c-.05.3.19.58.49.58H8.3l.84-5.32c.06-.38.39-.67.79-.67"></path><path fill="#ffffff" d="M18.99 8.29c-.81 3.73-3.36 5.7-7.42 5.7H10.1l-1.03 6.52c-.04.26.16.49.42.49h1.9c.34 0 .64-.25.69-.59c.08-.4.52-3.32.61-3.82c.05-.34.35-.59.69-.59h.44c2.82 0 5.03-1.15 5.68-4.46c.26-1.34.12-2.44-.51-3.25" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Kick' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2.72em" height="3.1em" viewBox="0 0 448 512" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M400 480H48c-26.4 0-48-21.6-48-48V80c0-26.4 21.6-48 48-48h352c26.4 0 48 21.6 48 48v352c0 26.4-21.6 48-48 48M199.6 178.5c0-30.7-17.6-45.1-39.7-45.1c-25.8 0-40 19.8-40 44.5v154.8c0 25.8 13.7 45.6 40.5 45.6c21.5 0 39.2-14 39.2-45.6v-41.8l60.6 75.7c12.3 14.9 39 16.8 55.8 0c14.6-15.1 14.8-36.8 4-50.4l-49.1-62.8l40.5-58.7c9.4-13.5 9.5-34.5-5.6-49.1c-16.4-15.9-44.6-17.3-61.4 7l-44.8 64.7z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'SoundCloud' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M11.56 8.87V17h8.76c1.85-.13 2.68-1.27 2.68-2.67c0-1.48-1.12-2.67-2.62-2.67c-.38 0-.7.08-1.03.22c-.24-2.34-2.23-4.17-4.68-4.17c-1.17 0-2.28.44-3.11 1.16m-.88 1.02c-.3-.18-.62-.32-.97-.39V17h1.39V9.34c-.15.16-.29.36-.42.55m-2.35-.54V17h.92V9.38c-.19-.03-.38-.04-.58-.04c-.12 0-.23 0-.34.01M6.5 10v7h.91V9.54c-.33.11-.64.27-.91.46m-1.67 2.5c-.06 0-.12-.06-.19-.09V17h.92v-6.14c-.37.48-.62 1.05-.73 1.64m-2.04-.28v4.69c.21.06.45.09.71.09h.22v-4.86c-.08-.01-.16-.02-.22-.02c-.26 0-.5.04-.71.1M1 14.56c0 .75.34 1.41.87 1.86v-3.71c-.53.44-.87 1.11-.87 1.85" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'Pinterest' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="M9.04 21.54c.96.29 1.93.46 2.96.46a10 10 0 0 0 10-10a10 10 0 0 0-10-10a10 10 0 0 0-10 10c0 4.25 2.67 7.9 6.44 9.34c-.09-.78-.18-2.07 0-2.96l1.15-4.94s-.29-.58-.29-1.5c0-1.38.86-2.41 1.84-2.41c.86 0 1.26.63 1.26 1.44c0 .86-.57 2.09-.86 3.27c-.17.98.52 1.84 1.52 1.84c1.78 0 3.16-1.9 3.16-4.58c0-2.4-1.72-4.04-4.19-4.04c-2.82 0-4.48 2.1-4.48 4.31c0 .86.28 1.73.74 2.3c.09.06.09.14.06.29l-.29 1.09c0 .17-.11.23-.28.11c-1.28-.56-2.02-2.38-2.02-3.85c0-3.16 2.24-6.03 6.56-6.03c3.44 0 6.12 2.47 6.12 5.75c0 3.44-2.13 6.2-5.18 6.2c-.97 0-1.92-.52-2.26-1.13l-.67 2.37c-.23.86-.86 2.01-1.29 2.7z" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                    {% elif platform == 'YouTube' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 24 24" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="#ffffff" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                    </svg>
+                {% else %}
+                    <!-- Default icon for custom and other platforms -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3.1em" height="3.1em" viewBox="0 0 48 48" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff">
+                        <path fill="currentColor" d="M30.718 32.5c-.471 2.437-1.135 4.603-1.931 6.395c-.82 1.844-1.732 3.183-2.618 4.026C25.296 43.75 24.567 44 24 44s-1.296-.248-2.169-1.08c-.886-.842-1.798-2.18-2.617-4.025c-.797-1.792-1.46-3.958-1.932-6.395zm2.544 0c-.825 4.547-2.293 8.35-4.149 10.84c5.762-1.519 10.506-5.545 12.996-10.84zm9.822-2.5h-9.443c.234-1.91.359-3.922.359-6c0-1.897-.104-3.74-.3-5.5h9.534A20 20 0 0 1 44 24c0 2.09-.32 4.106-.916 6m-11.963 0H16.879a47 47 0 0 1-.379-6a47 47 0 0 1 .317-5.5h14.366A47 47 0 0 1 31.5 24a47 47 0 0 1-.38 6m-16.76 0a49 49 0 0 1-.36-6c0-1.897.104-3.74.3-5.5H4.767A20 20 0 0 0 4 24c0 2.09.32 4.106.916 6zm-8.47 2.5c2.49 5.295 7.235 9.321 12.997 10.84c-1.856-2.49-3.324-6.293-4.149-10.84zM28.788 9.105c.85 1.914 1.55 4.254 2.025 6.895H17.188c.476-2.64 1.175-4.981 2.026-6.895c.82-1.844 1.731-3.183 2.617-4.026C22.704 4.25 23.433 4 24 4s1.296.248 2.169 1.08c.886.842 1.798 2.18 2.617 4.025M33.349 16h8.987c-2.421-5.541-7.281-9.774-13.223-11.34c1.924 2.58 3.43 6.572 4.236 11.34M5.664 16h8.987c.806-4.768 2.312-8.76 4.236-11.34C12.945 6.226 8.085 10.459 5.664 16" style="color:#ffffff;text-shadow:1px 1px 5px #ffffff"></path>
+                      </svg>
+                {% endif %}
+            </a>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+<script>
+    function onVerifySuccess(token) {
+        const loadingScreen = document.querySelector('.loading-screen');
+        loadingScreen.style.opacity = '0';
+        document.querySelector("#enter-sound").play();
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500);
+    }
+</script>
+<script>function enterSite(){const enterContainer=document.querySelector(".enter-container");enterContainer.classList.contains("clickable")&&(enterContainer.classList.add("fade-out"),document.querySelector("#enter-sound").play(),setTimeout((()=>{enterContainer.style.display="none"}),500))}window.addEventListener("load",(()=>{document.querySelector(".fade-in").classList.add("fade-in")}))</script>
+<script>
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        // F12 key
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+I (open developer tools)
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+J (open developer tools)
+        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+            e.preventDefault();
+        }
+        // Ctrl+U (view source)
+        if (e.ctrlKey && e.key === 'U') {
+            e.preventDefault();
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadingScreen = document.querySelector('.loading-screen');
+        const enterContainer = document.querySelector('.enter-container');
+        let width = 0;
+
+        function simulateLoading() {
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('fade-out');
+                        enterContainer.classList.add('clickable'); // Enable click to enter
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 1000);
+                    }, 500);
+                } else {
+                    width += 1;
+                }
+            }, 20);
+        }
+
+        // Start loading animation
+        simulateLoading();
+
+        // Wait for all images to load
+        Promise.all(Array.from(document.images).map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => img.addEventListener('load', resolve));
+        })).then(() => {
+            width = 100;
+        });
+    });
+
+    // Keep the original enterSite function
+    function enterSite() {
+        const enterContainer = document.querySelector(".enter-container");
+        const mainContent = document.querySelector(".main-content");
+        const volumeControl = document.querySelector(".volume-control-wrapper");
+        
+        if (enterContainer.classList.contains('clickable')) {
+            enterContainer.classList.add("fade-out");
+            document.querySelector("#enter-sound").play();
+            
+            // Show main content with fade in
+            mainContent.classList.add("visible");
+            
+            // Show volume control with fade in
+            volumeControl.classList.add("visible");
+            
+            setTimeout(() => {
+                enterContainer.style.display = "none";
+            }, 500);
+        }
+    }
+
+    function onVerifySuccess(token) {
+        // This function can remain empty as we're using the loading screen timer instead
+    }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('background-audio');
+    const volumeButton = document.querySelector('.w1teub_8629220724424aabca4a');
+    
+    if (audio && volumeButton) {
+        audio.volume = 0.85; // Set initial volume to 85%
+        
+        volumeButton.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        });
+
+        // Start playing when user clicks "Enter"
+        document.querySelector('.enter-container').addEventListener('click', function() {
+            audio.play().catch(function(error) {
+                console.log("Audio autoplay failed:", error);
+            });
+        });
+    }
+});
+</script>
+<script src="https://cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="4bd4645f4892bfc91ed2554f-|49" defer></script>
+<script>
+    function showUIDTooltip() {
+        document.getElementById('uid-tooltip').style.opacity = '1';
+    }
+
+    function hideUIDTooltip() {
+        document.getElementById('uid-tooltip').style.opacity = '0';
+    }
+</script>
+</body></html>

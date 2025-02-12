@@ -1,0 +1,659 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Links - swats.lol</title>
+    <link rel=icon href=https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/ak47.png type=image/x-icon>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js" type="0332e0e2cefcec181dc8ca45-text/javascript"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js" type="0332e0e2cefcec181dc8ca45-text/javascript"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #ffffff;
+            --primary-dark: #ffffff;
+            --bg-dark: #0a0a0a;
+        }
+
+        body, html {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar {
+            background: rgb(10, 10, 10);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgb(255, 255, 255);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-group {
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-group:hover {
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .sidebar-item:hover {
+            opacity: 1;
+            background: rgb(0, 0, 0);
+        }
+
+        .sidebar-item.active {
+            opacity: 1;
+            background: rgba(0, 0, 0);
+        }
+
+        .card {
+            background: rgb(0, 0, 0);
+            border-radius: 16px;
+            border: 1px solid rgb(255, 255, 255);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: rgb(255, 255, 255);
+            box-shadow: 0 8px 24px rgb(255, 255, 255);
+        }
+
+        .social-icon {
+            cursor: pointer;
+            padding: 1.5rem;
+            text-align: center;
+            background: rgb(0, 0, 0);
+            border: 1px solid rgb(255, 255, 255);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-4px);
+            background: rgba(99, 102, 241, 0.05);
+            border-color: rgb(255, 255, 255);
+            box-shadow: 0 8px 24px rgb(255, 255, 255);
+        }
+
+        .modal {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: rgb(0, 0, 0);
+            border: 1px solid rgb(255, 255, 255);
+            box-shadow: 0 8px 32px rgb(255, 255, 255);
+        }
+
+        .custom-input {
+            background: rgb(0, 0, 0);
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgb(255, 255, 255);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgb(255, 255, 255);
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: move;
+        }
+
+        .link-item:hover {
+            transform: translateY(-2px);
+            background: rgb(0, 0, 0);
+            border-color: rgb(255, 255, 255);
+        }
+
+        .link-item.sortable-ghost {
+            opacity: 0.5;
+            background: rgb(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                height: 100vh;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease forwards;
+        }
+    </style>
+</head>
+<body class="flex">
+    <button class="mobile-menu-button fixed top-4 left-4 p-2 bg-gray-800 rounded-lg z-50 lg:hidden">
+        <i class="fas fa-bars text-white text-xl"></i>
+    </button>
+
+    <div class="sidebar w-64 h-screen fixed lg:relative">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center space-x-3 mb-6 p-2.5 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-300 shadow-lg hover:scale-105">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-md -z-10"></div>
+                </div>
+                <h1 class="text-2xl font-bold text-white bg-clip-text bg-gradient-to-r from-black to-white animate-pulse">
+                    swats.lol
+                </h1>
+            </div>
+
+            <div class="flex-1 space-y-4 overflow-y-auto">
+                <div class="sidebar-group">
+                    <div class="text-xs text-gray-500 uppercase ml-3 mb-2">Dashboard</div>
+                    <a href="/dashboard" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-home w-6"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    {% if username %}
+                    <!-- If logged in, link to their profile -->
+                    <a href="/{{ username }}" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-user w-6"></i>
+                        <span>Profile</span>
+                    </a>
+                {% else %}
+                    <!-- If not logged in, redirect to the login page -->
+                    <a href="/login" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-user w-6"></i>
+                        <span>Profile</span>
+                    </a>
+                {% endif %}
+                    <a href="/customize" class="sidebar-item active flex items-center p-3 rounded-lg">
+                        <i class="fas fa-paint-brush w-6"></i>
+                        <span>Bio Editor</span>
+                    </a>
+                    <a href="/premium" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-gem w-6"></i>
+                        <span>Premium</span>
+                    </a>
+                    <a href="/links" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-link w-6"></i>
+                        <span>Social Links</span>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="pt-4 border-t border-gray-800">
+                <form action="/logout" method="get">
+                    <button type="submit" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-cog w-6"></i>
+                        <span>Log out</span>
+                    </button>
+                </form>
+            </div>   
+            
+                <a href="https://discord.gg/swats" target="_blank" 
+                class="sidebar-item flex items-center p-3 rounded-lg mt-2 bg-white bg-opacity-20 hover:bg-opacity-30">
+                <i class="fab fa-discord w-6"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 p-8">
+        <h1 class="text-2xl font-bold mb-8">Social Links</h1>
+        
+        <!-- Social Icons Grid -->
+        <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-4 mb-8">
+            <!-- The social icons will be dynamically inserted here -->
+        </div>
+    
+        <!-- Active Socials -->
+        <div class="mt-8">
+            <h2 class="text-xl font-bold mb-4">Your Active Socials</h2>
+            <div id="activeSocials" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <!-- Active socials will be displayed here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for adding social link -->
+    <div id="socialModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-gray-900 p-6 rounded-lg w-96 relative">
+            <button onclick="closeSocialModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3 id="modalTitle" class="text-xl font-bold mb-4">Add Link</h3>
+            <div id="customFieldsContainer" class="hidden">
+                <input type="text" id="customName" placeholder="Enter Custom Name" 
+                       class="w-full bg-gray-800 text-white p-2 rounded mb-4">
+            </div>
+            <input type="text" id="socialUrl" placeholder="Enter URL" 
+                   class="w-full bg-gray-800 text-white p-2 rounded mb-4">
+            <div class="flex justify-end space-x-2">
+                <button onclick="closeSocialModal()" 
+                        class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600">
+                    Cancel
+                </button>
+                <button onclick="saveSocialLink()" 
+                        class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    .social-icon {
+        width: 80px; /* Increased from 35px */
+        height: 80px; /* Increased from 35px */
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px; /* Increased from 8px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .social-icon i {
+        font-size: 32px; /* Increased from 16px */
+        color: white;
+    }
+    
+    .active-social {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 1rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .active-social:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    </style>
+    
+    <script>
+    const socialIcons = [
+        { name: 'Discord', icon: 'fab fa-discord' },
+        { name: 'Twitter', icon: 'fab fa-twitter' },
+        { name: 'Instagram', icon: 'fab fa-instagram' },
+        { name: 'Telegram', icon: 'fab fa-telegram' },
+        { name: 'TikTok', icon: 'fab fa-tiktok' },
+        { name: 'Bitcoin', icon: 'fab fa-bitcoin' },
+        { name: 'Ethereum', icon: 'fab fa-ethereum' },
+        { name: 'Litecoin', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0m-.262 3.678h2.584a.343.343 0 0 1 .33.435l-2.03 6.918l1.905-.582l-.408 1.385l-1.924.56l-1.248 4.214h6.676a.343.343 0 0 1 .328.437l-.582 2a.46.46 0 0 1-.44.33H6.733l1.723-5.822l-1.906.58l.42-1.361l1.91-.58l2.422-8.18a.456.456 0 0 1 .437-.334"/></svg>' },
+        { name: 'Solana', icon: 'fas fa-dice-d20' },
+        { name: 'Custom', icon: 'fas fa-link' },
+        { name: 'GitHub', icon: 'fab fa-github' },
+        { name: 'Twitch', icon: 'fab fa-twitch' },
+        { name: 'Reddit', icon: 'fab fa-reddit' },
+        { name: 'LinkedIn', icon: 'fab fa-linkedin' },
+        { name: 'Steam', icon: 'fab fa-steam' },
+        { name: 'Spotify', icon: 'fab fa-spotify' },
+        { name: 'Facebook', icon: 'fab fa-facebook' },
+        { name: 'SoundCloud', icon: 'fab fa-soundcloud' },
+        { name: 'Pinterest', icon: 'fab fa-pinterest' },
+        { name: 'YouTube', icon: 'fab fa-youtube' },
+        { name: 'Roblox', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M18.926 23.998L0 18.892L5.075.002L24 5.108ZM15.348 10.09l-5.282-1.453l-1.414 5.273l5.282 1.453z"/></svg>' },
+        { name: 'OnlyFans', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 4.003h-4.015c-3.45 0-5.3.197-6.748 1.957a7.996 7.996 0 1 0 2.103 9.211c3.182-.231 5.39-2.134 6.085-5.173c0 0-2.399.585-4.43 0c4.018-.777 6.333-3.037 7.005-5.995M5.61 11.999A2.391 2.391 0 0 1 9.28 9.97a2.966 2.966 0 0 1 2.998-2.528h.008c-.92 1.778-1.407 3.352-1.998 5.263A2.392 2.392 0 0 1 5.61 12Zm2.386-7.996a7.996 7.996 0 1 0 7.996 7.996a7.996 7.996 0 0 0-7.996-7.996m0 10.394A2.399 2.399 0 1 1 10.395 12a2.396 2.396 0 0 1-2.399 2.398Z"/></svg>' },
+        { name: 'PayPal', icon: 'fab fa-paypal' },
+        { name: 'Kick', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M400 480H48c-26.4 0-48-21.6-48-48V80c0-26.4 21.6-48 48-48h352c26.4 0 48 21.6 48 48v352c0 26.4-21.6 48-48 48M199.6 178.5c0-30.7-17.6-45.1-39.7-45.1c-25.8 0-40 19.8-40 44.5v154.8c0 25.8 13.7 45.6 40.5 45.6c21.5 0 39.2-14 39.2-45.6v-41.8l60.6 75.7c12.3 14.9 39 16.8 55.8 0c14.6-15.1 14.8-36.8 4-50.4l-49.1-62.8l40.5-58.7c9.4-13.5 9.5-34.5-5.6-49.1c-16.4-15.9-44.6-17.3-61.4 7l-44.8 64.7z"/></svg>' },
+        // Add more social platforms here
+    ];
+    
+    let currentPlatform = '';
+    // Add custom platform counter
+    let customCounter = 1;
+
+    function initializeSocialIcons() {
+        const container = document.querySelector('.grid');
+        socialIcons.forEach(social => {
+            const div = document.createElement('div');
+            div.className = 'social-icon';
+            if (social.svg) {
+                // Use custom SVG if available
+                div.innerHTML = social.svg;
+            } else {
+                // Fallback to Font Awesome icons for other platforms
+                div.innerHTML = `<i class="${social.icon}"></i>`;
+            }
+            div.onclick = () => openSocialModal(social.name);
+            container.appendChild(div);
+        });
+    }
+    
+    function openSocialModal(platform) {
+        currentPlatform = platform;
+        document.getElementById('modalTitle').textContent = `Add ${platform} Link`;
+        document.getElementById('socialModal').classList.remove('hidden');
+        document.getElementById('socialModal').classList.add('flex');
+        document.getElementById('socialUrl').value = '';
+        
+        // Show/hide custom name field based on platform
+        const customFieldsContainer = document.getElementById('customFieldsContainer');
+        const customNameInput = document.getElementById('customName');
+        
+        if (platform === 'Custom') {
+            customFieldsContainer.classList.remove('hidden');
+            customNameInput.value = '';
+            customNameInput.focus();
+        } else {
+            customFieldsContainer.classList.add('hidden');
+            document.getElementById('socialUrl').focus();
+        }
+    }
+    
+    function closeSocialModal() {
+        document.getElementById('socialModal').classList.add('hidden');
+        document.getElementById('socialModal').classList.remove('flex');
+        currentPlatform = '';
+    }
+    
+    // Add this list of reserved names and domains at the top of your script
+    const RESERVED_NAMES = [
+        'nigger',
+        'faggot',
+        'admin',
+        'administrator',
+        'mod',
+        'moderator',
+        'staff',
+        'system'
+    ];
+
+    const RESERVED_DOMAINS = [
+        'nigger.lol',
+        'www.faggot.lol'
+    ];
+
+    // Update the saveSocialLink function with validation
+    async function saveSocialLink() {
+        const url = document.getElementById('socialUrl').value;
+        if (!url) return;
+
+        try {
+            let platform = currentPlatform;
+            if (currentPlatform === 'Custom') {
+                const customName = document.getElementById('customName').value.trim();
+                if (!customName) {
+                    alert('Please enter a name for your custom link');
+                    return;
+                }
+                platform = customName;
+
+                // Check for reserved names
+                if (RESERVED_NAMES.some(name => customName.toLowerCase().includes(name.toLowerCase()))) {
+                    alert('This name is reserved and cannot be used');
+                    return;
+                }
+            }
+
+            // Check for reserved domains
+            try {
+                const urlObj = new URL(url);
+                if (RESERVED_DOMAINS.some(domain => urlObj.hostname.toLowerCase().includes(domain.toLowerCase()))) {
+                    alert('This domain cannot be used');
+                    return;
+                }
+            } catch (e) {
+                alert('Please enter a valid URL');
+                return;
+            }
+
+            const response = await fetch('/api/add-social', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    platform: platform,
+                    url: url
+                })
+            });
+
+            if (!response.ok) throw new Error('Failed to save link');
+
+            closeSocialModal();
+            await loadActiveSocials();
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to save social link');
+        }
+    }
+
+    async function retryRemoveSocial(platform, maxRetries = 3) {
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await fetch('/api/remove-social', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ platform: platform })
+                });
+    
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log(`Successfully removed ${platform} on attempt ${attempt}`);
+                    return true;
+                }
+    
+                console.log(`Attempt ${attempt} failed, ${maxRetries - attempt} retries left`);
+                // Wait a bit longer between each retry
+                await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+                
+            } catch (error) {
+                console.error(`Attempt ${attempt} error:`, error);
+                if (attempt === maxRetries) {
+                    throw error;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Update removeSocial function to fix 404 error
+    async function removeSocial(platform) {
+        if (!platform) return;
+        
+        if (!confirm(`Remove ${platform} link?`)) return;
+    
+        try {
+            // First clean the platform name of any special characters
+            const cleanPlatform = platform.replace(/[<>"/]/g, '').trim();
+            
+            console.log('Attempting to remove platform:', cleanPlatform);
+            
+            const response = await fetch('/api/remove-social', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ platform: cleanPlatform })
+            });
+    
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Remove from UI
+                const socialElement = document.querySelector(`[data-platform="${cleanPlatform}"]`).closest('.active-social');
+                if (socialElement) {
+                    socialElement.remove();
+                }
+                // Refresh the list
+                await loadActiveSocials();
+            } else {
+                throw new Error(data.message || 'Failed to remove social link');
+            }
+    
+        } catch (error) {
+            console.error('Error removing social:', error);
+            alert('Failed to remove social link: ' + error.message);
+        }
+    }
+    
+    // Update loadActiveSocials to properly handle custom links
+    async function loadActiveSocials() {
+        try {
+            const response = await fetch('/api/get-socials');
+            const data = await response.json();
+            
+            if (!data.success) throw new Error('Failed to load socials');
+    
+            const container = document.getElementById('activeSocials');
+            container.innerHTML = '';
+    
+            const socials = data.socials || {};
+    
+            Object.entries(socials).forEach(([platform, url]) => {
+                if (!platform || !url) return;
+                
+                const div = document.createElement('div');
+                div.className = 'active-social';
+                
+                // Clean the platform name
+                const sanitizedPlatform = platform.replace(/[<>"/]/g, '').trim();
+                
+                div.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        ${getIconForPlatform(sanitizedPlatform)}
+                        <span>${sanitizedPlatform}</span>
+                    </div>
+                    <button class="text-red-500 hover:text-red-400 remove-social" 
+                            type="button"
+                            data-platform="${sanitizedPlatform}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+    
+            // Add event listeners
+            document.querySelectorAll('.remove-social').forEach(button => {
+                button.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    if (platform) {
+                        removeSocial(platform);
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to load social links');
+        }
+    }
+    
+    // Add this new function to handle custom icons
+    function getIconForPlatform(platform) {
+        const social = socialIcons.find(s => s.name === platform);
+        if (social) {
+            if (social.svg) {
+                return social.svg;
+            } else if (social.icon) {
+                return `<i class="${social.icon}"></i>`;
+            }
+        }
+        // Return a default link icon for custom platforms
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M11 17H7q-2.075 0-3.537-1.463T2 12q0-2.075 1.463-3.537T7 7h4v2H7q-1.25 0-2.125.875T4 12q0 1.25.875 2.125T7 15h4zm-3-4v-2h8v2zm5 4v-2h4q1.25 0 2.125-.875T20 12q0-1.25-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.463T22 12q0 2.075-1.463 3.537T17 17z"/></svg>';
+    }
+    
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeSocialIcons();
+        loadActiveSocials();
+    });
+    </script>
+<script src="https://cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="0332e0e2cefcec181dc8ca45-|49" defer></script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'90c1ab2a7d515c05',t:'MTczODU3NzgxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='https://cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<style>
+.social-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: currentColor;
+}
+
+.active-social svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+/* Ensure custom icons have proper spacing */
+.active-social .flex.items-center.gap-2 svg {
+    margin-right: 8px;
+}
+</style>
+</body>
+</html>

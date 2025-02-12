@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize - swats.lol</title>
+    <link rel=icon href=https://pub-ed272d53e98b4a0cb690106931d3da78.r2.dev/ak47.png type=image/x-icon>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js" type="6d7e5fff32af2c53551535f4-text/javascript"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #ffffff;
+            --primary-dark: #ffffff;
+            --bg-dark: #0a0a0a;
+        }
+
+        body, html {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-group {
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-group:hover {
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .sidebar-item:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-item.active {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgb(255, 255, 255);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-select {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .custom-select option {
+            background-color: #000000;
+            color: white;
+            padding: 8px;
+        }
+        .custom-select option:hover {
+            background-color: #444;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #666;
+            box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.2);
+        }
+
+        .custom-select:hover {
+            border-color: rgb(255, 255, 255);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgb(255, 255, 255);
+        }
+
+        .upload-zone {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgb(255, 255, 255);
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone:hover {
+            background: rgba(99, 102, 241, 0.05);
+            border-color: rgb(255, 255, 255);
+        }
+
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            user-select: none;
+        }
+        
+        .switch input {
+            display: none;
+        }
+        
+        .switch label {
+            width: 52px;
+            height: 28px;
+            background: rgb(0, 0, 0);
+            border-radius: 14px;
+            padding: 2px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgb(0, 0, 0);
+            backdrop-filter: blur(4px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1),
+                        0 1px 2px rgba(255, 255, 255, 0.05);
+        }
+        
+        .switch label::after {
+            content: "";
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark, #ffffff));
+            top: 1px;
+            left: 1px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .switch label:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .switch label:active::after {
+            width: 28px;
+        }
+        
+        .switch input:checked + label {
+            background: rgb(255, 255, 255);
+            border-color: rgb(255, 255, 255);
+        }
+        
+        .switch input:checked + label::after {
+            transform: translateX(24px);
+            background: linear-gradient(145deg, var(--primary), var(--primary-light, #ffffff));
+            box-shadow: 0 2px 4px rgb(255, 255, 255);
+        }
+        
+        .switch input:checked + label:active::after {
+            transform: translateX(20px);
+        }
+        
+        @media (hover: hover) {
+            .switch label::after {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .switch label:hover::after {
+                box-shadow: 0 2px 8px rgb(255, 255, 255);
+            }
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgb(0, 0, 0);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        select, input[type="text"] {
+            background: rgb(0, 0, 0);
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 8px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        select:hover, input[type="text"]:hover {
+            border-color: rgb(255, 255, 255);
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgb(255, 255, 255);
+        }
+
+        .pickr {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+                        inset 0 2px 4px rgba(255, 255, 255, 0.05);
+        }
+        
+        .pickr:hover {
+            transform: translateY(-1px);
+            border-color: rgb(255, 255, 255);
+            box-shadow: 0 4px 8px rgb(0, 0, 0);
+        }
+        
+        .pickr:focus-within {
+            border-color: rgb(255, 255, 255);
+            box-shadow: 0 0 0 3px rgb(0, 0, 0);
+        }
+        
+        .pickr button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+        
+        .pickr button:active {
+            transform: scale(0.95);
+        }
+        
+        .pickr button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                height: 100vh;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            color: black; /* Change text color to black */
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-button {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                height: 100vh;
+                width: 100%;
+                max-width: 280px;
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-button {
+                display: block !important;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+            }
+
+            .flex-1.p-8 {
+                width: 100%;
+                padding: 1rem !important;
+                padding-top: 4rem !important;
+                margin-bottom: 5rem;
+            }
+
+            
+            .grid-cols-1, 
+            .grid-cols-2, 
+            .grid-cols-3, 
+            .grid-cols-4 {
+                grid-template-columns: repeat(1, 1fr) !important;
+            }
+
+            
+            .grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            
+            .submit-button {
+                position: fixed;
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                width: calc(100% - 2rem);
+                z-index: 999;
+                color: black; /* Change text color to black */
+            }
+
+            
+            .card {
+                margin-bottom: 1rem;
+            }
+
+            .mb-16 {
+                margin-bottom: 6rem !important;
+            }
+        }
+        .preview-fallback {
+            background: rgba(31, 41, 55, 0.5);
+        }
+
+        .loading-spinner {
+            border: 2px solid rgb(255, 255, 255);
+            border-top-color: rgb(255, 255, 255);
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+    </style>
+</head>
+<body class="flex">
+    <button class="mobile-menu-button p-2 bg-gray-800 rounded-lg fixed top-4 left-4 z-50">
+        <i class="fas fa-bars text-white text-xl"></i>
+    </button>
+
+    <div class="sidebar w-64 h-screen fixed lg:relative">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center space-x-3 mb-6 p-2.5 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-300 shadow-lg hover:scale-105">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/20 to-white/20 rounded-full blur-md -z-10"></div>
+                </div>
+                <h1 class="text-2xl font-bold text-white bg-clip-text bg-gradient-to-r from-black to-white animate-pulse">
+                    swats.lol
+                </h1>
+            </div>
+
+            <div class="flex-1 space-y-4 overflow-y-auto">
+                <div class="sidebar-group">
+                    <div class="text-xs text-gray-500 uppercase ml-3 mb-2">Dashboard</div>
+                    <a href="/dashboard" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-home w-6"></i>
+                        <span>Dashboard</span>
+                    </a>
+                        {% if username %}
+                            <!-- If logged in, link to their profile -->
+                            <a href="/{{ username }}" class="sidebar-item flex items-center p-3 rounded-lg">
+                                <i class="fas fa-user w-6"></i>
+                                <span>Profile</span>
+                            </a>
+                        {% else %}
+                            <!-- If not logged in, redirect to the login page -->
+                            <a href="/login" class="sidebar-item flex items-center p-3 rounded-lg">
+                                <i class="fas fa-user w-6"></i>
+                                <span>Profile</span>
+                            </a>
+                        {% endif %}
+                    <a href="/customize" class="sidebar-item active flex items-center p-3 rounded-lg">
+                        <i class="fas fa-paint-brush w-6"></i>
+                        <span>Bio Editor</span>
+                    </a>
+                    <a href="/premium" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-gem w-6"></i>
+                        <span>Premium</span>
+                    </a>
+                    <a href="/links" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-link w-6"></i>
+                        <span>Social Links</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-800">
+                <form action="/logout" method="get">
+                    <button type="submit" class="sidebar-item flex items-center p-3 rounded-lg">
+                        <i class="fas fa-cog w-6"></i>
+                        <span>Log out</span>
+                    </button>
+                </form>
+            </div>   
+        
+                <a href="https://discord.gg/swats" target="_blank" 
+                class="sidebar-item flex items-center p-3 rounded-lg mt-2 bg-white bg-opacity-20 hover:bg-opacity-30">
+                    <i class="fab fa-discord w-6"></i>
+                    <span>Join Discord</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 p-8 mb-16">
+        <h1 class="text-2xl font-bold text-white bg-clip-text bg-gradient-to-r from-black to-white animate-pulse">
+            Bio Editor
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="col-span-2">
+                <div class="card p-6 mb-6">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <i class="fas fa-upload mr-3 text-white"></i>
+                        Media Uploads
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Background Upload -->
+<div class="upload-card relative">
+    <input type="file" accept=".png,.jpg,.jpeg,.gif,.webp,.avif,.tiff,.bmp,.svg,.ico,.mp4,.webm,.m4v,.mov,.ogv" id="backgroundUpload" class="hidden" onchange="previewBackground()" />
+    <label for="backgroundUpload" class="upload-zone h-32 rounded-lg flex flex-col items-center justify-center cursor-pointer">
+        <i class="fas fa-upload mr-3 text-white"></i>
+        <span id="backgroundLabel" class="text-sm text-gray-400">Upload Background</span>
+    </label>
+    <div id="backgroundPreviewContainer" class="hidden absolute inset-0 rounded-lg overflow-hidden">
+        <img id="backgroundPreview" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+        <div class="preview-fallback hidden w-full h-full bg-gray-800 flex-col items-center justify-center p-2 text-center">
+            <i class="fas fa-upload mr-3 text-white"></i>
+            <span class="text-sm text-gray-400 break-all">File uploaded</span>
+            <span id="backgroundFileName" class="text-xs text-gray-500 mt-1 break-all"></span>
+        </div>
+    </div>
+    <button class="absolute top-2 right-2 p-2 bg-gray-900 bg-opacity-75 rounded-full text-gray-400 hover:text-white" onclick="removeFile('background')">
+        <i class="fas fa-times"></i>
+    </button>
+    <div id="backgroundLoading" class="hidden absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+        <div class="loading-spinner"></div>
+    </div>
+</div>
+
+<script>
+    function previewBackground() {
+        const fileInput = document.getElementById('backgroundUpload');
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileReader = new FileReader();
+
+        // Show loading state while previewing the file
+        document.getElementById('backgroundLoading').classList.remove('hidden');
+
+        fileReader.onloadend = () => {
+            const previewContainer = document.getElementById('backgroundPreviewContainer');
+            const previewImg = document.getElementById('backgroundPreview');
+            const fallback = document.getElementById('backgroundFileName');
+
+            previewContainer.classList.remove('hidden');
+            previewImg.src = fileReader.result;
+            fallback.innerText = fileName;
+
+            // Hide loading spinner after file preview is set
+            document.getElementById('backgroundLoading').classList.add('hidden');
+        }
+
+        fileReader.readAsDataURL(file);
+
+        // Send the file to the server
+        uploadBackground(file);
+    }
+
+    function uploadBackground(file) {
+        const formData = new FormData();
+        formData.append('background', file);
+
+        // Show loading spinner during upload
+        document.getElementById('backgroundLoading').classList.remove('hidden');
+
+        fetch('/api/upload-background', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('session') // assuming session is stored as cookie
+            }
+        }).then(response => response.json())
+          .then(data => {
+              document.getElementById('backgroundLoading').classList.add('hidden'); // Hide loading spinner after upload completes
+              
+              if (data.success) {
+                  alert('Background uploaded successfully!');
+                  // Update the profile background URL dynamically
+                  document.getElementById('backgroundPreview').src = data.background_url;
+              } else {
+                  alert('Error uploading background! ' + (data.message || 'Please try again.'));
+              }
+          })
+          .catch(error => {
+              document.getElementById('backgroundLoading').classList.add('hidden'); // Hide loading spinner on error
+              alert('Error uploading background! ' + error.message);
+          });
+    }
+
+    function removeFile(type) {
+        if (type === 'background') {
+            document.getElementById('backgroundPreviewContainer').classList.add('hidden');
+            document.getElementById('backgroundUpload').value = '';
+        }
+    }
+
+    // Helper function to get cookie
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+</script>
+                        <!-- Cursor Upload -->
+                        <div class="upload-card relative">
+                            <input type="file" accept=".cur,.ani" id="cursorUpload" class="hidden" />
+                            <label for="cursorUpload" class="upload-zone h-32 rounded-lg flex flex-col items-center justify-center cursor-pointer">
+                                <i class="fas fa-upload mr-3 text-white"></i>
+                                <span id="cursorLabel" class="text-sm text-gray-400">Upload Cursor</span>
+                            </label>
+                            <div id="cursorPreviewContainer" class="hidden absolute inset-0 rounded-lg overflow-hidden">
+                                <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="6d7e5fff32af2c53551535f4-|49"></script><img id="cursorPreview" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+                                <div class="preview-fallback hidden w-full h-full bg-gray-800 flex-col items-center justify-center p-2 text-center">
+                                    <i class="fas fa-file text-indigo-500 text-2xl mb-2"></i>
+                                    <span class="text-sm text-gray-400 break-all">File uploaded</span>
+                                    <span id="cursorFileName" class="text-xs text-gray-500 mt-1 break-all"></span>
+                                </div>
+                            </div>
+                            <button class="absolute top-2 right-2 p-2 bg-gray-900 bg-opacity-75 rounded-full text-gray-400 hover:text-white" onclick="if (!window.__cfRLUnblockHandlers) return false; removeFile('cursor')" data-cf-modified-6d7e5fff32af2c53551535f4-="">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div id="cursorLoading" class="hidden absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+                                <div class="loading-spinner"></div>
+                            </div>
+                        </div>
+            
+                        <!-- Avatar Upload -->
+                        <div class="upload-card relative">
+    <input type="file" accept=".png,.jpg,.jpeg,.gif,.webp,.avif,.tiff,.bmp,.svg,.ico" id="avatarUpload" class="hidden" onchange="previewAvatar()" />
+    <label for="avatarUpload" class="upload-zone h-32 rounded-lg flex flex-col items-center justify-center cursor-pointer">
+        <i class="fas fa-upload mr-3 text-white"></i>
+        <span id="avatarLabel" class="text-sm text-gray-400">Upload Avatar</span>
+    </label>
+    <div id="avatarPreviewContainer" class="hidden absolute inset-0 rounded-lg overflow-hidden">
+        <img id="avatarPreview" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
+        <div class="preview-fallback hidden w-full h-full bg-gray-800 flex-col items-center justify-center p-2 text-center">
+            <i class="fas fa-upload mr-3 text-white"></i>
+            <span class="text-sm text-gray-400 break-all">File uploaded</span>
+            <span id="avatarFileName" class="text-xs text-gray-500 mt-1 break-all"></span>
+        </div>
+    </div>
+    <button class="absolute top-2 right-2 p-2 bg-gray-900 bg-opacity-75 rounded-full text-gray-400 hover:text-white" onclick="removeFile('avatar')">
+        <i class="fas fa-times"></i>
+    </button>
+    <div id="avatarLoading" class="hidden absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+        <div class="loading-spinner"></div>
+    </div>
+</div>
+
+<script>
+function previewAvatar() {
+    const fileInput = document.getElementById('avatarUpload');
+    const file = fileInput.files[0];
+    const fileName = file.name;
+    const fileReader = new FileReader();
+
+    // Show loading state while previewing the file
+    document.getElementById('avatarLoading').classList.remove('hidden');
+
+    fileReader.onloadend = () => {
+        const previewContainer = document.getElementById('avatarPreviewContainer');
+        const previewImg = document.getElementById('avatarPreview');
+        const fallback = document.getElementById('avatarFileName');
+
+        previewContainer.classList.remove('hidden');
+        previewImg.src = fileReader.result;
+        fallback.innerText = fileName;
+
+        // Hide loading spinner after file preview is set
+        document.getElementById('avatarLoading').classList.add('hidden');
+    }
+
+    fileReader.readAsDataURL(file);
+
+    // Send the file to the server
+    uploadAvatar(file);
+}
+
+function uploadAvatar(file) {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    // Show loading spinner during upload
+    document.getElementById('avatarLoading').classList.remove('hidden');
+
+    fetch('/api/upload-avatar', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Authorization': 'Bearer ' + getCookie('session')
+        }
+    }).then(response => response.json())
+      .then(data => {
+          document.getElementById('avatarLoading').classList.add('hidden');
+          
+          if (data.success) {
+              alert('Avatar uploaded successfully!');
+              // Update the profile avatar URL dynamically
+              document.getElementById('avatarPreview').src = data.avatar_url;
+              document.getElementById('avatarPreviewContainer').classList.remove('hidden');
+          } else {
+              alert('Error uploading avatar! ' + (data.message || 'Please try again.'));
+          }
+      })
+      .catch(error => {
+          document.getElementById('avatarLoading').classList.add('hidden');
+          alert('Error uploading avatar! ' + error.message);
+      });
+}
+</script>
+            
+                        <!-- Audio Upload -->
+                        <div class="upload-card relative">
+    <input type="file" 
+           accept=".mp3,.wav,.ogg,.m4a,.aac,.flac,.mp4,.mov,.m4v" 
+           id="audioUpload" 
+           class="hidden" 
+           onchange="previewAudio()" />
+    <label for="audioUpload" class="upload-zone h-32 rounded-lg flex flex-col items-center justify-center cursor-pointer">
+        <i class="fas fa-upload mr-3 text-white"></i>
+        <span id="audioLabel" class="text-sm text-gray-400">Upload Audio</span>
+    </label>
+    <div id="audioPreviewContainer" class="hidden absolute inset-0 rounded-lg bg-gray-800">
+        <div class="w-full h-full flex flex-col items-center justify-center p-2">
+            <audio id="audioPreview" controls class="w-full mb-2">
+                <source id="audioSource" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <span id="audioFileName" class="text-sm text-gray-400 break-all text-center"></span>
+        </div>
+    </div>
+    <button class="absolute top-2 right-2 p-2 bg-gray-900 bg-opacity-75 rounded-full text-gray-400 hover:text-white" onclick="removeFile('audio')">
+        <i class="fas fa-times"></i>
+    </button>
+    <div id="audioLoading" class="hidden absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 rounded-lg">
+        <div class="loading-spinner"></div>
+    </div>
+</div>
+
+<script>
+function previewAudio() {
+    const fileInput = document.getElementById('audioUpload');
+    const file = fileInput.files[0];
+    
+    if (!file) return;
+    
+    // Check if file is video
+    const isVideo = file.type.startsWith('video/');
+    const fileName = file.name;
+    document.getElementById('audioLoading').classList.remove('hidden');
+
+    // Create preview
+    const audioPreview = document.getElementById('audioPreview');
+    const audioSource = document.getElementById('audioSource');
+    const previewContainer = document.getElementById('audioPreviewContainer');
+    const fileNameDisplay = document.getElementById('audioFileName');
+    
+    // For video files, we'll just show the filename since we can't preview the audio yet
+    if (isVideo) {
+        previewContainer.classList.remove('hidden');
+        fileNameDisplay.textContent = `${fileName} (Audio will be extracted)`;
+    } else {
+        audioSource.src = URL.createObjectURL(file);
+        audioPreview.load();
+        previewContainer.classList.remove('hidden');
+        fileNameDisplay.textContent = fileName;
+    }
+
+    // Upload the file
+    const formData = new FormData();
+    formData.append('audio', file);
+
+    fetch('/api/upload-audio', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('audioLoading').classList.add('hidden');
+        if (data.success) {
+            console.log('Audio uploaded successfully:', data.audio_url);
+            // Update audio source to the uploaded URL
+            audioSource.src = data.audio_url;
+            audioPreview.load();
+        } else {
+            console.error('Upload failed:', data.message);
+            alert('Upload failed: ' + data.message);
+        }
+    })
+    .catch(error => {
+        document.getElementById('audioLoading').classList.add('hidden');
+        console.error('Upload error:', error);
+        alert('Upload error: ' + error.message);
+    });
+}
+
+// Update the removeFile function to handle audio files
+function removeFile(type) {
+    const previewContainer = document.getElementById(`${type}PreviewContainer`);
+    const preview = type === 'audio' ? document.getElementById('audioPreview') : document.getElementById(`${type}Preview`);
+    const label = document.getElementById(`${type}Label`);
+    const input = document.getElementById(`${type}Upload`);
+    const fileName = document.getElementById(`${type}FileName`);
+
+    if (previewContainer) previewContainer.classList.add('hidden');
+    if (preview) {
+        if (type === 'audio') {
+            preview.pause();
+            preview.src = '';
+        } else {
+            preview.src = '';
+        }
+    }
+    if (label) label.textContent = `Upload ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+    if (input) input.value = '';
+    if (fileName) fileName.textContent = '';
+
+    // Make API call to remove the file from server
+    fetch('/api/deletefile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type: type })
+    }).catch(error => console.error('Error removing file:', error));
+}
+</script>
+                    </div>
+                </div>
+            
+                <!-- Profile Settings -->
+                <div class="card p-6 mb-6 mt-8">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <i class="fas fa-upload mr-3 text-white"></i>
+                        Profile Settings
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+    <label class="block mb-2 text-sm font-medium">Description</label>
+    <input type="text" id="description" class="w-full p-3" placeholder="Enter your description..." onchange="updateDescription(this.value)">
+    <button onclick="saveDescription()" class="mt-2 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">Save Description</button>
+    <p id="descriptionStatus" class="mt-1 text-sm text-gray-400 hidden"></p>
+</div>
+                            <div class="switch">
+    <input type="checkbox" id="discordPresence">
+    <label for="discordPresence"></label>
+    <span class="text-sm">Discord Presence</span>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="switch">
+        <input type="checkbox" id="hideBadges">
+        <label for="hideBadges"></label>
+        <span class="text-sm">Hide Badges</span>
+    </div>
+</div>
+
+<script>
+// Replace the existing Discord presence script with this:
+document.getElementById('discordPresence').addEventListener('change', async function() {
+    try {
+        const response = await fetch('/api/update-discord-presence', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                discord_presence: this.checked
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        if (data.success) {
+            // Success! No need to do anything
+            console.log('Discord presence updated successfully');
+        } else {
+            throw new Error(data.message || 'Failed to update setting');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to update discord presence setting');
+        // Revert the checkbox
+        this.checked = !this.checked;
+    }
+});
+
+// Add this for initial state
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/api/userbio');
+        const data = await response.json();
+        if (data.success && data.user_data) {
+            document.getElementById('discordPresence').checked = data.user_data.discord_presence;
+        }
+    } catch (error) {
+        console.error('Error loading discord presence state:', error);
+    }
+});
+</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card p-6">
+                <h3 class="text-xl font-semibold mb-6 flex items-center">
+                    <i class="fas fa-upload mr-3 text-white"></i>
+                    Additional Settings
+                </h3>
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Layout</label>
+                            <select id="layout" class="w-full p-2 custom-select">
+                                <option value="Default">Default</option>
+                                <option value="Legacy">Legacy</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Text Font</label>
+                            <select id="textFont" class="w-full p-2 custom-select">
+                                <option value="Satoshi">Satoshi</option>
+                                <option value="Were-Beast">Drippy</option>
+                                <option value="Minecraftia">Minecraft</option>
+                                <option value="Fira Code">Fira Code</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium">Background Effects</label>
+                            <select id="backgroundEffects" class="w-full p-2 custom-select">
+                                <option value="none">None</option>
+                                <option value="rain">Rain</option>
+                                <option value="snow">Snow</option>
+                                <option value="thunder">Thunder</option>
+                                <option value="night">Night</option>
+                                <option value="stars">Stars</option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="6d7e5fff32af2c53551535f4-text/javascript">
+        const colorPickers = ['accentColor', 'textColor', 'backgroundColor', 'iconColor', 'joinedatcolor'];
+        const pickrInstances = {};
+    
+        colorPickers.forEach(id => {
+            pickrInstances[id] = Pickr.create({
+                el: `#${id}`,
+                theme: 'nano',
+                default: '#000000',
+                
+                components: {
+                    preview: true,
+                    opacity: true,
+                    hue: true,
+                    interaction: {
+                        hex: true,
+                        rgba: true,
+                        input: true,
+                        save: true
+                    }
+                }
+            });
+        });
+    
+        function populateFormFields(data) {
+            try { document.getElementById('description').value = data.description; } catch (e) { console.error('Failed to load description:', e); }
+            try { document.getElementById('discordPresence').checked = data.discordPresence; } catch (e) { console.error('Failed to load discordPresence:', e); }
+            try { document.getElementById('profileOpacity').value = data.profileOpacity; } catch (e) { console.error('Failed to load profileOpacity:', e); }
+            try { document.getElementById('profileBlur').value = data.profileBlur; } catch (e) { console.error('Failed to load profileBlur:', e); }
+            try { document.getElementById('socialsGlow').checked = data.socialsGlow; } catch (e) { console.error('Failed to load socialsGlow:', e); }
+            try { document.getElementById('usernameGlow').checked = data.usernameGlow; } catch (e) { console.error('Failed to load usernameGlow:', e); }
+            try { document.getElementById('badgeGlow').checked = data.badgeGlow; } catch (e) { console.error('Failed to load badgeGlow:', e); }
+            try { document.getElementById('layout').value = data.layout; } catch (e) { console.error('Failed to load layout:', e); }
+            try { document.getElementById('textFont').value = data.textFont; } catch (e) { console.error('Failed to load textFont:', e); }
+            try { document.getElementById('pageEnterText').value = data.pageEnterText; } catch (e) { console.error('Failed to load pageEnterText:', e); }
+            try { document.getElementById('monochromeBadges').checked = data.monochromeBadges; } catch (e) { console.error('Failed to load monochromeBadges:', e); }
+            try { document.getElementById('hideBadges').checked = data.hideBadges; } catch (e) { console.error('Failed to load hideBadges:', e); }
+            try { document.getElementById('backgroundPreview').src = data.backgroundUrl; } catch (e) { console.error('Failed to load backgroundUrl:', e); }
+            try { document.getElementById('cursorPreview').src = data.cursorUrl; } catch (e) { console.error('Failed to load cursorUrl:', e); }
+            try { document.getElementById('avatarPreview').src = data.avatarUrl; } catch (e) { console.error('Failed to load avatarUrl:', e); }
+            try { document.getElementById('audioFileName').textContent = data.audioUrl; } catch (e) { console.error('Failed to load audioUrl:', e); }
+            try { document.getElementById('audioVolume').value = data.audioVolume; } catch (e) { console.error('Failed to load audioVolume:', e); }
+            try { document.getElementById('backgroundEffects').value = data.backgroundEffects; } catch (e) { console.error('Failed to load backgroundEffects:', e); }
+        
+            Object.keys(pickrInstances).forEach(id => {
+                try {
+                    console.log(`Setting color for ${id}: ${data[id]}`);
+                    pickrInstances[id].setColor(data[id]);
+                } catch (e) {
+                    console.error(`Failed to set color for ${id}:`, e);
+                }
+            });
+        
+    
+    
+            function updatePreviews(data) {
+                ['background', 'cursor', 'avatar'].forEach(id => {
+                    const preview = document.getElementById(`${id}Preview`);
+                    const container = document.getElementById(`${id}PreviewContainer`);
+                    const label = document.getElementById(`${id}Label`);
+                    const fileName = document.getElementById(`${id}FileName`);
+                    
+                    const url = data[`${id}Url`];
+                    const labelText = label.textContent;
+                    const fileNameText = fileName.textContent;
+
+                    if (url && url !== 'None set' && url !== 'None%20set' && labelText !== 'None set' && labelText !== 'None%20set' && fileNameText !== 'None set' && fileNameText !== 'None%20set') {
+                        preview.src = url;
+                        container.classList.remove('hidden');
+                        label.textContent = 'File uploaded';
+                        fileName.textContent = url.split('/').pop();
+                    } else {
+                        container.classList.add('hidden');
+                        label.textContent = `Upload ${id.charAt(0).toUpperCase() + id.slice(1)}`;
+                        fileName.textContent = '';
+                    }
+                });
+
+                const audioPreview = document.getElementById('audioPreview');
+                const audioContainer = document.getElementById('audioPreviewContainer');
+                const audioLabel = document.getElementById('audioLabel');
+                const audioFileName = document.getElementById('audioFileName');
+                
+                const audioUrl = data.audioUrl;
+                const audioLabelText = audioLabel.textContent;
+                const audioFileNameText = audioFileName.textContent;
+
+                if (audioUrl && audioUrl !== 'None set' && audioUrl !== 'None%20set' && audioLabelText !== 'None set' && audioLabelText !== 'None%20set' && audioFileNameText !== 'None set' && audioFileNameText !== 'None%20set') {
+                    audioPreview.src = audioUrl;
+                    audioContainer.classList.remove('hidden');
+                    audioLabel.textContent = 'Audio uploaded';
+                    audioFileName.textContent = audioUrl.split('/').pop();
+                } else {
+                    audioContainer.classList.add('hidden');
+                    audioLabel.textContent = 'Upload Audio';
+                    audioFileName.textContent = '';
+                }
+            }
+            updatePreviews(data);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/userbio')
+                .then(response => response.json())
+                .then(data => {
+                    populateFormFields(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching user bio:', error);
+                });
+        });
+    
+        function getFormValues() {
+            const formValues = {
+                description: document.getElementById('description').value,
+                discordPresence: document.getElementById('discordPresence').checked,
+                profileOpacity: document.getElementById('profileOpacity').value,
+                profileBlur: document.getElementById('profileBlur').value,
+                swapboxColors: false,
+                socialsGlow: document.getElementById('socialsGlow').checked,
+                badgeGlow: document.getElementById('badgeGlow').checked,
+                usernameGlow: document.getElementById('usernameGlow').checked,
+                layout: document.getElementById('layout').value,
+                textFont: document.getElementById('textFont').value,
+                pageEnterText: document.getElementById('pageEnterText').value,
+                monochromeBadges: document.getElementById('monochromeBadges').checked,
+                hideBadges: document.getElementById('hideBadges').checked,
+                maintance: document.getElementById('maintance').checked,
+                muteButton: document.getElementById('muteButton').checked,
+                audioVolume: document.getElementById('audioVolume').value,
+                backgroundEffects: document.getElementById('backgroundEffects').value,
+                cardborderstyle: document.getElementById('cardborderstyle').value
+    
+    
+            };
+        
+            colorPickers.forEach(id => {
+                formValues[id] = pickrInstances[id].getColor().toHEXA().toString();
+            });
+        
+            ['background', 'cursor', 'avatar'].forEach(id => {
+                const label = document.getElementById(id + 'Label');
+                const preview = document.getElementById(id + 'Preview');
+                const fileName = document.getElementById(id + 'FileName');
+        
+                if (label && label.dataset.uploadedUrl) {
+                    formValues[id + 'Url'] = label.dataset.uploadedUrl;
+                } else {
+                    if (preview) {
+                        console.log('Preview:', preview.src);
+                        if (preview.src === 'https://swats.lol/customize') {
+                            formValues[id + 'Url'] = 'None';
+                        } else {
+                            formValues[id + 'Url'] = preview.src;
+                        }
+                    } else {
+                        console.log('No preview found for', id);
+                        formValues[id + 'Url'] = 'None set';
+                    }
+                }
+            });
+            ['audio'].forEach(id => {
+                const label = document.getElementById(id + 'Label');
+                const preview = document.getElementById(id + 'Preview');
+                const fileName = document.getElementById(id + 'FileName');
+                
+        
+                if (label && label.dataset.uploadedUrl) {
+                    formValues[id + 'Url'] = label.dataset.uploadedUrl;
+                } else {
+                    if (fileName) {
+                        console.log('Preview:', fileName.textContent);
+                        if (fileName.textContent === 'https://swats.lol/customize') {
+                            formValues[id + 'Url'] = 'None';
+                        } else {
+                            formValues[id + 'Url'] = 'https://r2.swats.lol/' + fileName.textContent;
+                        }
+                    } else {
+                        console.log('No preview found for', id);
+                        formValues[id + 'Url'] = 'None set';
+                    }
+                }
+            });
+        
+            return formValues;
+        }
+        
+        document.getElementById('submitButton').addEventListener('click', function() {
+            const formData = getFormValues();
+            
+            fetch('/api/userbio', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Profile settings updated successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred while updating profile settings.');
+            });
+        });
+        async function updateFileElement(id, file) {
+            const preview = document.getElementById(`${id}Preview`);
+            const label = document.getElementById(`${id}Label`);
+            const fileName = document.getElementById(`${id}FileName`);
+            const CHUNK_SIZE = 1024 * 1024;
+            const MAX_FILE_SIZE = 80 * 1024 * 1024;
+            const MAX_RETRIES = 3;
+            
+            showLoading(id);
+            label.textContent = 'Preparing upload...';
+        
+            try {
+                if (!file) {
+                    throw new Error('No file selected');
+                }
+                if (file.size > MAX_FILE_SIZE) {
+                    throw new Error('File too large. Maximum size allowed is 30MB.');
+                }
+        
+                
+                
+                const allowedExtensions = {
+                    'image': ['.png', '.jpeg', '.jpg', '.gif', '.webp', '.ico', '.cur'],
+                    'audio': ['.ogg', '.mp3', '.wav'],
+                    'video': ['.mp4', '.webm', '.mov', '.avi', '.mkv']
+                };
+                
+                const fileType = file.type.toLowerCase();
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                console.log('File extension:', fileExtension);
+                
+                const isValidExtension = Object.values(allowedExtensions).flat().includes(`.${fileExtension}`);
+                
+                if (!isValidExtension) {
+                    throw new Error('Invalid file type. Please upload a valid file.');
+                }
+        
+                const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+                const fileId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+                let uploadedUrl = '';
+        
+                console.log(`Starting upload of ${file.name}, size: ${(file.size / (1024 * 1024)).toFixed(2)}MB, chunks: ${totalChunks}`);
+        
+                for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+                    const start = chunkIndex * CHUNK_SIZE;
+                    const end = Math.min(start + CHUNK_SIZE, file.size);
+                    const chunk = file.slice(start, end);
+                    
+                    
+                    const chunkArrayBuffer = await chunk.arrayBuffer();
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', chunkArrayBuffer);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    const chunkHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        
+                    let retryCount = 0;
+                    while (retryCount < MAX_RETRIES) {
+                        try {
+                            const formData = new FormData();
+                            formData.append('file', new Blob([chunk]), file.name);
+                            formData.append('chunk_index', chunkIndex.toString());
+                            formData.append('total_chunks', totalChunks.toString());
+                            formData.append('file_id', fileId);
+                            formData.append('file_size', file.size.toString());
+                            formData.append('chunk_size', chunk.size.toString());
+                            formData.append('chunk_hash', chunkHash);
+        
+                            const response = await fetch('/api/testupload', {
+                                method: 'POST',
+                                body: formData
+                            });
+        
+                            if (!response.ok) {
+                                const errorData = await response.json();
+                                throw new Error(errorData.detail || 'Upload failed');
+                            }
+        
+                            const data = await response.json();
+                            console.log(`Chunk ${chunkIndex + 1} response:`, data);
+        
+                            const progress = ((chunkIndex + 1) / totalChunks) * 100;
+                            label.textContent = `Uploading... ${Math.round(progress)}%`;
+        
+                            if (data.url) {
+                                uploadedUrl = data.url;
+                                break;
+                            }
+                            break; 
+                        } catch (error) {
+                            console.error(`Error uploading chunk ${chunkIndex}, attempt ${retryCount + 1}:`, error);
+                            retryCount++;
+                            if (retryCount === MAX_RETRIES) {
+                                throw error;
+                            }
+                            await new Promise(resolve => setTimeout(resolve, 1000 * retryCount)); 
+                        }
+                    }
+                }
+        
+                if (!uploadedUrl) {
+                    throw new Error('Upload failed - no URL received');
+                }
+        
+                
+                label.dataset.uploadedUrl = uploadedUrl;
+                
+                if (id === 'audio') {
+                    if (preview && file.type.startsWith('audio/')) {
+                        preview.src = URL.createObjectURL(file);
+                    }
+                    if (fileName) {
+                        fileName.textContent = file.name;
+                        fileName.classList.remove('hidden');
+                    }
+                    label.textContent = 'Audio Uploaded Successfully';
+                } else {
+                    if (preview) {
+                        preview.src = URL.createObjectURL(file);
+                        preview.classList.remove('hidden');
+                    }
+                    label.textContent = `${file.name} (Uploaded)`;
+                }
+        
+                label.parentElement.classList.remove('border-red-500');
+                label.parentElement.classList.add('border-blue-500', 'border-2');
+        
+            } catch (error) {
+                console.error('Upload failed:', error);
+                alert(error.message || 'Failed to upload file. Please try again.');
+                label.textContent = `Upload ${id.charAt(0).toUpperCase() + id.slice(1)}`;
+                label.parentElement.classList.remove('border-blue-500');
+                label.parentElement.classList.add('border-red-500', 'border-2');
+            } finally {
+                hideLoading(id);
+            }
+        }
+    
+            function showLoading(id) {
+                const loadingElement = document.getElementById(`${id}Loading`);
+                if (loadingElement) {
+                    loadingElement.classList.remove('hidden');
+                }
+            }
+    
+            function hideLoading(id) {
+                const loadingElement = document.getElementById(`${id}Loading`);
+                if (loadingElement) {
+                    loadingElement.classList.add('hidden');
+                }
+            }
+    
+            function removeFile(id) {
+                
+                const previewContainer = document.getElementById(`${id}PreviewContainer`);
+                const preview = document.getElementById(`${id}Preview`);
+                const label = document.getElementById(`${id}Label`);
+                const input = document.getElementById(`${id}Upload`);
+                const fileName = document.getElementById(`${id}FileName`);
+                
+                
+                let fileUrl;
+                if (id === 'audio') {
+                    
+                    fileUrl = 'https://r2.swats.lol/' + fileName.textContent;
+                } else {
+                    
+                    fileUrl = preview?.src || null;
+                }
+                
+                if (!fileUrl || fileUrl === 'None set' || fileUrl === window.location.href) {
+                    console.log(`No file to remove for ${id}`);
+                    return;
+                }
+
+                
+                showLoading(id);
+
+                fetch('/api/deletefile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        filename: fileUrl,
+                        type: id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(`${id} deleted successfully`);
+                    
+                
+                    if (previewContainer) {
+                        previewContainer.classList.add('hidden');
+                    }
+
+                    
+                    if (preview) {
+                        preview.src = '';
+                        preview.classList.add('hidden');
+                    }
+
+                    
+                    if (label) {
+                        label.textContent = `Upload ${id.charAt(0).toUpperCase() + id.slice(1)}`;
+                        label.parentElement.classList.remove('border-blue-500', 'border-2');
+                        delete label.dataset.uploadedUrl;
+                    }
+
+                    
+                    if (fileName) {
+                        fileName.textContent = '';
+                    }
+
+                    
+                    if (input) {
+                        input.value = '';
+                        input.disabled = false; 
+                    }
+
+                    
+                    if (id === 'audio') {
+                        const audioPreview = document.getElementById('audioPreview');
+                        if (audioPreview) {
+                            audioPreview.src = '';
+                        }
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to delete file. Please try again.');
+                })
+                .finally(() => {
+                    hideLoading(id);
+                });
+            }
+            
+    
+            ['background', 'cursor', 'avatar', 'audio'].forEach(id => {
+                const removeButton = document.querySelector(`[onclick="removeFile('${id}')"]`);
+                if (removeButton) {
+                    removeButton.addEventListener('click', function(event) {
+                        event.preventDefault(); 
+                        removeFile(id);
+                    });
+                }
+            });
+    
+            ['background', 'cursor', 'avatar', 'audio'].forEach(id => {
+                document.getElementById(`${id}Upload`).addEventListener('change', function () {
+                    if (this.files && this.files[0]) {
+                        updateFileElement(id, this.files[0]);
+                    }
+                });
+            });
+    
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+    
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+    
+            ['background', 'cursor', 'avatar', 'audio'].forEach(id => {
+                const dropZone = document.getElementById(`${id}Upload`).parentElement;
+                
+                dropZone.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+    
+                    if (files.length) {
+                        document.getElementById(`${id}Upload`).files = files;
+                        updateFileElement(id, files[0]);
+                    }
+                });
+            });
+    
+    
+            document.querySelectorAll('.fancy-dropdown').forEach(dropdown => {
+                const selected = dropdown.querySelector('.selected');
+                const options = dropdown.querySelector('.options');
+    
+                selected.addEventListener('click', function () {
+                    dropdown.classList.toggle('open');
+                });
+    
+                options.querySelectorAll('.option').forEach(option => {
+                    option.addEventListener('click', function () {
+                        selected.textContent = this.textContent;
+                        dropdown.classList.remove('open');
+                    });
+                });
+            });
+            document.addEventListener('DOMContentLoaded', () => {
+                const menuButton = document.querySelector('.mobile-menu-button');
+                const sidebar = document.querySelector('.sidebar');
+                
+                if (menuButton && sidebar) {
+                    menuButton.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        sidebar.classList.toggle('active');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (window.innerWidth <= 768 && 
+                            sidebar.classList.contains('active') && 
+                            !sidebar.contains(e.target) && 
+                            !menuButton.contains(e.target)) {
+                            sidebar.classList.remove('active');
+                        }
+                    });
+                }
+            });
+    
+    // Add this function to handle avatar uploads
+    function uploadAvatar(file) {
+        const formData = new FormData();
+        formData.append('avatar', file);
+
+        document.getElementById('avatarLoading').classList.remove('hidden');
+
+        fetch('/api/upload-avatar', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': 'Bearer ' + getCookie('session')
+            }
+        }).then(response => response.json())
+          .then(data => {
+              document.getElementById('avatarLoading').classList.add('hidden');
+              
+              if (data.success) {
+                  alert('Avatar uploaded successfully!');
+                  document.getElementById('avatarPreview').src = data.avatar_url;
+                  document.getElementById('avatarPreviewContainer').classList.remove('hidden');
+              } else {
+                  alert('Error uploading avatar! ' + (data.message || 'Please try again.'));
+              }
+          })
+          .catch(error => {
+              document.getElementById('avatarLoading').classList.add('hidden');
+              alert('Error uploading avatar! ' + error.message);
+          });
+    }
+
+    // Update the existing function to handle avatar uploads
+    function previewAvatar() {
+        const fileInput = document.getElementById('avatarUpload');
+        const file = fileInput.files[0];
+        const fileName = file.name;
+        const fileReader = new FileReader();
+
+        document.getElementById('avatarLoading').classList.remove('hidden');
+
+        fileReader.onloadend = () => {
+            const previewContainer = document.getElementById('avatarPreviewContainer');
+            const previewImg = document.getElementById('avatarPreview');
+            const fallback = document.getElementById('avatarFileName');
+
+            previewContainer.classList.remove('hidden');
+            previewImg.src = fileReader.result;
+            fallback.innerText = fileName;
+
+            document.getElementById('avatarLoading').classList.add('hidden');
+        }
+
+        fileReader.readAsDataURL(file);
+        uploadAvatar(file);
+    }
+
+    // Update event listener for avatar upload
+    document.getElementById('avatarUpload').addEventListener('change', previewAvatar);
+
+        </script>
+<script>
+// Function to update description
+async function updateDescription(description) {
+    const status = document.getElementById('descriptionStatus');
+    try {
+        const response = await fetch('/api/update-description', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ description: description })
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+            status.textContent = 'Description saved successfully!';
+            status.classList.remove('text-red-500');
+            status.classList.add('text-green-500');
+        } else {
+            throw new Error(data.message || 'Failed to update description');
+        }
+    } catch (error) {
+        status.textContent = 'Error saving description: ' + error.message;
+        status.classList.remove('text-green-500');
+        status.classList.add('text-red-500');
+    }
+
+    // Show status message
+    status.classList.remove('hidden');
+    
+    // Hide status message after 3 seconds
+    setTimeout(() => {
+        status.classList.add('hidden');
+    }, 3000);
+}
+
+// Load existing description when page loads
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const response = await fetch(`/api/userbio`);
+        const data = await response.json();
+        if (data.description) {
+            document.getElementById('description').value = data.description;
+        }
+    } catch (error) {
+        console.error('Error loading description:', error);
+    }
+});
+</script>
+<script>
+// Function to save description
+async function saveDescription() {
+    const description = document.getElementById('description').value;
+    const status = document.getElementById('descriptionStatus');
+    
+    try {
+        const response = await fetch('/api/update-description', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ description: description })
+        });
+
+        const data = await response.json();
+        
+        if (data.success) {
+            status.textContent = 'Description saved successfully!';
+            status.classList.remove('text-red-500');
+            status.classList.add('text-green-500');
+        } else {
+            throw new Error(data.message || 'Failed to update description');
+        }
+    } catch (error) {
+        status.textContent = 'Error saving description: ' + error.message;
+        status.classList.remove('text-green-500');
+        status.classList.add('text-red-500');
+    }
+
+    status.classList.remove('hidden');
+    
+    setTimeout(() => {
+        status.classList.add('hidden');
+    }, 3000);
+}
+
+// Load existing description when page loads
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const response = await fetch(`/api/userbio`);
+        const data = await response.json();
+        if (data.description) {
+            document.getElementById('description').value = data.description;
+        }
+    } catch (error) {
+        console.error('Error loading description:', error);
+    }
+});
+</script>
+<script>
+// Hide badges toggle functionality
+document.getElementById('hideBadges').addEventListener('change', async function() {
+    const checkbox = this;
+    checkbox.disabled = true; // Disable checkbox while processing
+
+    try {
+        const response = await fetch('/api/update-settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                hide_badges: checkbox.checked
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Failed to update setting');
+        }
+
+        // Success! Leave the checkbox in its new state
+        console.log('Badge visibility updated successfully');
+
+    } catch (error) {
+        console.error('Error:', error);
+        // Revert the checkbox state on error
+        checkbox.checked = !checkbox.checked;
+        alert('Failed to update badge visibility setting');
+    } finally {
+        checkbox.disabled = false; // Re-enable checkbox
+    }
+});
+
+// Load initial state
+document.addEventListener('DOMContentLoaded', async () => {
+    const checkbox = document.getElementById('hideBadges');
+    try {
+        const response = await fetch('/api/userbio');
+        const data = await response.json();
+        if (data.success && data.user_data) {
+            checkbox.checked = data.user_data.hide_badges || false;
+        }
+    } catch (error) {
+        console.error('Error loading badge visibility state:', error);
+    }
+});
+</script>
+
+<script>
+// Load existing media previews when page loads
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/api/userbio');
+        const data = await response.json();
+        
+        if (data.success && data.user_data) {
+            // Load background preview
+            if (data.user_data.background_url) {
+                const container = document.getElementById('backgroundPreviewContainer');
+                const preview = document.getElementById('backgroundPreview');
+                preview.src = data.user_data.background_url;
+                container.classList.remove('hidden');
+            }
+
+            // Load avatar preview
+            if (data.user_data.avatar_url) {
+                const container = document.getElementById('avatarPreviewContainer');
+                const preview = document.getElementById('avatarPreview');
+                preview.src = data.user_data.avatar_url;
+                container.classList.remove('hidden');
+            }
+
+            // Load audio preview
+            if (data.user_data.audio_url) {
+                const container = document.getElementById('audioPreviewContainer');
+                const audio = document.getElementById('audioPreview');
+                const audioSource = document.getElementById('audioSource');
+                const fileName = document.getElementById('audioFileName');
+                
+                audioSource.src = data.user_data.audio_url;
+                fileName.textContent = data.user_data.audio_url.split('/').pop();
+                audio.load();
+                container.classList.remove('hidden');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading media previews:', error);
+    }
+});
+
+// Update the removeFile function to also remove from server
+async function removeFile(type) {
+    const previewContainer = document.getElementById(`${type}PreviewContainer`);
+    const preview = type === 'audio' ? document.getElementById('audioPreview') : document.getElementById(`${type}Preview`);
+    const input = document.getElementById(`${type}Upload`);
+
+    if (previewContainer) previewContainer.classList.add('hidden');
+    if (preview) {
+        if (type === 'audio') {
+            preview.pause();
+            preview.src = '';
+        } else {
+            preview.src = '';
+        }
+    }
+    if (input) input.value = '';
+
+    // Send delete request to server
+    try {
+        const response = await fetch('/api/delete-media', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ type: type })
+        });
+
+        const data = await response.json();
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.error('Error removing file:', error);
+        alert('Failed to remove file: ' + error.message);
+    }
+}
+</script>
+
+<script src="https://cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="6d7e5fff32af2c53551535f4-|49" defer></script></body>
+</html>

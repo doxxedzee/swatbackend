@@ -1,0 +1,714 @@
+@font-face {
+    font-family: 'Bold';
+    src: url('/public/src/fonts/mainfont.ttf');
+}
+
+@font-face {
+    font-family: 'Light';
+    src: url('/public/src/fonts/secondfont.ttf');
+}
+
+.highlight {
+    color: #C18be0;
+    text-shadow:
+    0 0 32px #C18be0;
+}
+
+/* font setup */
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* fadeIn & fadeOut setup */
+
+body {
+    background-color: #111;
+}
+
+/* background setup */
+
+.header {
+    display: flex;
+    justify-content: center;
+    margin-top: 4vh;
+}
+
+/* header box setup */
+
+.mainmenu {
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    background-color: #0e0e0e;
+    box-shadow: 0 0 25px #0000009a;
+    display: flex;
+    align-items: center;
+    transition: width 1s ease-in-out, height 1s ease-in-out;
+    position: relative;
+}
+
+.wyalogo {
+    width: 70px;
+    height: 70px;
+    border-radius: 35%;
+    margin-left: 15.5px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyalogo:hover {
+    box-shadow: 0 0 10px #C18be0;
+    transition: .3s ease-in-out;
+}
+
+/* main menu setup */
+
+.wyaMenuOptions {
+    display: none;
+    flex-direction: row;
+}
+
+.wyaLine {
+    width: 2px;
+    height: 60px;
+    border-radius: 25px;
+    background-color: #1b1b1b;
+    box-shadow: 0 0 2px #000000;
+    margin-left: 15px;
+}
+
+.wyaText {
+    font-family: Light;
+    color: #fff;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+/* main menu info setup */
+
+.menuMisc {
+    right: 150px;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    gap: 30px;
+    top: 40px;
+    overflow: hidden;
+}
+
+.wyaUsers {
+    color: #fff;
+    font-family: Light;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyaUsers:hover {
+    text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff;
+}
+
+.wyaShowcase {
+    color: #fff;
+    font-family: Light;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyaShowcase:hover {
+    text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff;
+}
+
+.wyaPremium {
+    color: #fff;
+    font-family: Light;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyaPremium:hover {
+    text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff;
+}
+
+.wyaDiscord {
+    color: #fff;
+    font-family: Light;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyaDiscord:hover {
+    text-shadow:
+    0 0 7px #fff,
+    0 0 10px #fff;
+}
+
+
+/* premium discord buttons setup */
+
+.signOptions {
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    align-items: center;
+    gap: 5px;
+    top: 15px;
+}
+
+.wyaSignIn {
+    width: 80px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 10px;
+    font-family: Light;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.wyaSignIn:hover {
+    box-shadow: 0 0 10px #C18be0;
+}
+
+/* signIn signUp buttons setup */
+
+.landing {
+    display: block;
+    margin-top: 8vh;
+}
+
+.wyaLanding {
+    display: block;
+    animation: fadeIn .5s ease-in;
+    margin-top: 8vh;
+    transform: translateY(15px); /* Initial position */
+    transition: transform .5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.wyaTitle {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 55px;
+    text-align: center;
+    margin: 0;
+    color: #fff;
+}
+
+.wyaDesc {
+    font-family: Light;
+    font-weight: 500;
+    font-size: 35px;
+    text-align: center;
+    margin: 0;
+    color: #fff;
+}
+
+/* landing text setup */
+
+.wyaUsernameBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+    gap: 10px;
+}
+
+.wyaUsernameRedeem {
+    width: 235px;
+    height: 40px;
+    background-color: #0c0c0c;
+    border: 1px solid #222222;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+}
+
+.wyaUserText {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.wyaUsername {
+    width: 150px;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    background-color: transparent;
+    color: #C18be0;
+    border: 0;
+    outline: none;
+}
+
+.wyaClaim {
+    width: 70px;
+    height: 40px;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 10px;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.wyaClaim:hover {
+    box-shadow: 0 0 10px #C18be0;
+}
+
+/* claim username setup */
+
+.wyaMisc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15vh;
+    gap: 10px;
+}
+
+.wyaJoinDiscord {
+    width: 120px;
+    height: 40px;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 10px;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.wyaJoinDiscord:hover {
+    box-shadow: 0 0 10px #C18be0;
+}
+
+/* join discord button setup */
+
+.wyaFooter {
+    display: block;
+    width: 100%;
+    height: 70px;
+    background-color: #0f0f0f;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #C18be0;
+}
+
+.wyaFooterLeft{
+    display: flex;
+    position: absolute;
+    left: 5%;
+    bottom: 35%;
+}
+
+.wyaFooterLeftText {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff ;
+}
+
+.wyaFooterRight{
+    display: flex;
+    position: absolute;
+    right: 5%;
+    bottom: 35%;
+}
+
+.wyaFooterRightText {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff ;
+}
+
+.wyaFooterRightText a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.wyaFooterRightText a:hover {
+    text-shadow: 0 0 10px #fff;
+}
+
+/* footer setup */
+
+.wyaInTheMaking {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20vh;
+    margin-bottom: 0;
+}
+
+.wyaInTheMaking a{
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff ;
+}
+
+.wyaRandomImage{
+    width: 410;
+    height: 410;
+    background-color: #1b1b1b;
+    border: 1px solid #222222;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 5px;
+    margin-top: 3vh;
+}
+
+.wyaMisc2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+/* building the page setup */
+
+.wyaSignInLanding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20vh;
+    margin-bottom: 0;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+}
+
+.wyaSignInButton {
+    width: 250px;
+    height: 50px;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    color: #fff;
+    text-decoration: none;
+}
+
+.wyaSignInButton:hover {
+    box-shadow: 0 0 15px #C18be0;
+}
+
+/* sign in page setup */
+
+.wyaInviteCode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.5s;
+}
+
+.wyaInviteCodeText {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+    margin-top: 35vh;
+    margin-bottom: 1vh;
+    text-align: center;
+}
+
+.wyaInviteCodeInput {
+    width: 200px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid #1b1b1b;
+    border-radius: 5px;
+    outline: transparent;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.wyaInviteCodeClaim {
+    width: 200px;
+    height: 40px;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 5px;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    align-content: center;
+    margin-top: 1vh;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyaInviteCodeClaim:hover {
+    box-shadow: 0 0 10px #C18be0;
+}
+
+.arrow {
+    margin-top: 6px;
+}
+
+.wyaBio {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.5s;
+}
+
+.wyaBioText {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+    margin-top: 33.5vh;
+    margin-bottom: 1vh;
+    text-align: center;
+}
+
+.wyaUsernameInput {
+    width: 210px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid #1b1b1b;
+    border-radius: 5px;
+    outline: transparent;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.wyaDisplayNameInput {
+    width: 210px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid #1b1b1b;
+    border-radius: 5px;
+    outline: transparent;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.wyaBioClaim {
+    width: 200px;
+    height: 40px;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 5px;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    align-content: center;
+    margin-top: 1vh;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.wyaBioClaim:hover {
+    box-shadow: 0 0 10px #C18be0;
+}
+
+/* logged in page setup */
+
+.wyaDashboardDiv {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.5s;
+    margin-top: 10vh;
+}
+
+.wyaDashboardText {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 20px;
+    color: #fff;
+    margin-top: 33.5vh;
+    text-align: center;
+}
+
+.wyaDashboard {
+    width: 500px;
+    height: 650px;
+    background-color: #0e0e0e;
+    border: 1px solid #464646;
+    border-radius: 10px;
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 15px;
+    color: #fff;
+    display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    transition: .3s ease-in-out;
+    text-decoration: none;
+    margin-top: 5vh;
+}
+
+/* dashboard page */
+
+.wyaUsersTitle {
+    font-family: Light;
+    font-weight: 1000;
+    font-size: 55px;
+    text-align: center;
+    margin: 5vh;
+    color: #fff;
+}
+
+.wyaUserlist {
+    font-family: Light;
+    font-weight: 500;
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+}
+
+.users-name {
+    cursor: pointer;
+    margin: 1vh;
+    transition: .3s ease-in-out;
+}
+
+.users-name:hover {
+    text-shadow: 0 0 15px #fff;
+}
+
+.highlight2 {
+    color: #C18be0;
+    text-shadow:
+    0 0 26px #C18be0,
+    0 0 52px #C18be0;
+}
+
+.landingAvailable {
+    font-family: Light;
+    font-weight: 500;
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    margin-top: 30vh;
+}
+
+.landingAvailableText {
+    font-family: Light;
+    font-weight: 600;
+    font-size: 25px;
+    text-align: center;
+}
+
+.usernameAvailableBox {
+    width: 150px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c18be071;
+    border: 1px solid #C18be0;
+    border-radius: 10px;
+    font-family: Light;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    text-decoration: none;
+    margin-top: 5vh;
+}
+
+.usernameAvailableBox:hover {
+    box-shadow: 0 0 10px #C18be0;
+}
+
+.notfoundminitext {
+    cursor: pointer;
+    margin: 1vh;
+    transition: .3s ease-in-out;
+    text-decoration: none;
+    color: #fff;
+    bottom: 0;
+    position: absolute;
+}
+
+.notfoundminitext:hover {
+    text-shadow: 0 0 20px #fff;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>swats.lol - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0f0f;
+            color: #e0e0e0;
+        }
+        .glass {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .icon {
+            color: rgba(255, 255, 255, 1);
+            scale: 1.5;
+            padding-right: 5px;
+        }
+        .sidebar {
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .stat-card {
+            background-color: rgba(40, 40, 40, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-300 min-h-screen flex">
+<!-- Sidebar -->
+<aside id="sidebar" class="w-64 min-h-screen bg-[#121212] border-r border-gray-800 shadow-lg">
+    <nav class="h-full flex flex-col p-6">
+<!-- User Info -->
+<div class="mb-10 flex flex-col items-center">
+    <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center overflow-hidden">
+        {% if profile_picture %}
+            <img src="{{ profile_picture }}" alt="Profile Picture" class="w-full h-full object-cover">
+        {% else %}
+            <i class='bx bx-user text-4xl text-white'></i> <!-- Default icon if no avatar exists -->
+        {% endif %}
+    </div>
+    <h1 class="text-xl font-semibold text-white mt-4">Hey, @{{ username }}!</h1>
+</div>
+
+        <ul class="flex-1 space-y-2">
+            <li>
+                <a href="/dashboard" class="flex items-center gap-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 transition-all">
+                    <i class='bx bx-home text-xl text-blue-400'></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/customize" class="flex items-center gap-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 transition-all">
+                    <i class='bx bx-edit text-xl text-green-400'></i>
+                    <span class="font-medium">Bio Editor</span>
+                </a>
+            </li>
+            <li>
+                <a href="/links" class="flex items-center gap-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 transition-all">
+                    <i class='bx bx-info-circle text-xl text-yellow-400'></i>
+                    <span class="font-medium">Social Links</span>
+                </a>
+            </li>
+            <li>
+                <a href="/premium" class="flex items-center gap-3 px-4 py-3 text-gray-300 rounded-lg hover:bg-gray-800 transition-all">
+                    <i class='bx bx-star text-xl text-yellow-500'></i>
+                    <span class="font-medium">Premium</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="pt-4 border-t border-gray-800">
+
+            {% if username %}
+            <!-- If logged in, link to their profile -->
+            <a href="/{{ username }}" class="sidebar-item flex items-center p-3 rounded-lg">
+                <i class="fas fa-user w-6"></i>
+                <span>Profile</span>
+            </a>
+        {% else %}
+            <!-- If not logged in, redirect to the login page -->
+            <a href="/login" class="sidebar-item flex items-center p-3 rounded-lg">
+                <i class="fas fa-user w-6"></i>
+                <span>Profile</span>
+            </a>
+        {% endif %}
+        
+            <form action="/logout" method="get">
+                <button type="submit" class="sidebar-item flex items-center p-3 rounded-lg">
+                    <i class="fas fa-cog w-6"></i>
+                    <span>Log out</span>
+                </button>
+            </form>
+        </div>      
+    </nav>
+</aside>
+
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <div class="max-w-7xl mx-auto">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold text-white mb-2">Dashboard</h1>
+                <p class="text-gray-500">Overview of your swats.lol profile</p>
+            </header>
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Discord Card -->
+                <div class="bg-[#121212] rounded-xl border border-gray-800 p-6 hover:border-gray-700 transition-colors">
+                    <h2 class="text-xl font-semibold text-white mb-6">Community</h2>
+                    
+                    <a href="https://discord.gg/swats" target="_blank" 
+                       class="flex items-center justify-center gap-3 py-4 bg-[#5865F2] rounded-lg hover:bg-[#4752C4] transition-colors mb-3">
+                        <i class='bx bxl-discord-alt text-2xl'></i>
+                        <span class="font-medium">Join Our Discord</span>
+                    </a>
+                </div>
+
+                <div class="bg-[#121212] rounded-xl border border-gray-800 p-6 hover:border-gray-700 transition-colors">
+                    <h2 class="text-xl font-semibold text-white mb-6">Quick Links</h2>
+                    <div class="space-y-6">
+                        <a href="/connect/discord" 
+                           class="flex items-center justify-center gap-3 py-4 bg-[#5865F2] rounded-lg hover:bg-[#4752C4] transition-colors mb-3">
+                            <i class='bx bxl-discord-alt text-2xl'></i>
+                            {% if discord_connected %}
+                                <span class="font-medium">Discord Connected</span>
+                            {% else %}
+                                <span class="font-medium">Connect Discord Account</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Update Log Card -->
+                <div class="md:col-span-2 bg-[#121212] rounded-xl border border-gray-800 p-6 hover:border-gray-700 transition-colors">
+                    <h2 class="text-xl font-semibold text-white mb-6">Update Log</h2>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-black/50 rounded-lg">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-blue-400 font-semibold">Version 1.7.0</span>
+                                <span class="px-2 py-1 text-xs bg-blue-500/10 text-blue-400 rounded-full">Latest</span>
+                            </div>
+                            <ul class="space-y-2 text-gray-400 text-sm">
+                                <li>• swats.lol release</li>
+                                <li>• added social links</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-black/50 rounded-lg">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-gray-400 font-semibold">Version 1.6.9</span>
+                            </div>
+                            <ul class="space-y-2 text-gray-400 text-sm">
+                                <li>• discord.gg/swats</li>
+                                <li>• ty @lecturing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+    </main>
+
+    <script>
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                gsap.to(link, {paddingLeft: '24px', duration: 0.2});
+            });
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, {paddingLeft: '16px', duration: 0.2});
+            });
+        });
+
+        gsap.from('.glass', {opacity: 0, y: 20, duration: 0.5, stagger: 0.2});
+    </script>
+
+<script>
+    document.getElementById("logout-btn").addEventListener("click", async (event) => {
+        event.preventDefault();
+        const response = await fetch("/logout", { method: "POST" });
+        if (response.ok) {
+            window.location.href = "/login";
+        } else {
+            alert("Logout failed, please try again.");
+        }
+    });
+
+    async function stats() {
+        try {
+            let response = await fetch('/api/register');
+            let data = await response.json();
+
+            if (data.success) {
+                document.getElementById('userCount').textContent = data.users || '0';
+                document.getElementById('totalViews').textContent = data.views || '0';
+            } else {
+                throw new Error('Failed to fetch stats');
+            }
+        } catch (error) {
+            console.error('Error fetching stats:', error);
+            document.getElementById('userCount').textContent = 'Error';
+            document.getElementById('totalViews').textContent = 'Error';
+        }
+    }
+
+    // Run immediately and then every 5 seconds
+    stats();
+    setInterval(stats, 5000);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check for Discord connection success/error messages
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('discord_connected') === 'true') {
+            alert('Discord account connected successfully!');
+        } else if (urlParams.get('error') === 'discord_connection_failed') {
+            alert('Failed to connect Discord account. Please try again.');
+        }
+    });
+</script>
+
+</html>
